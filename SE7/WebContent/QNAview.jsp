@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@page import="java.io.PrintWriter"%>
 <%@page import="dao.DAO"%>
+<%@page import="beans.qboard"%>
 <%@page import="beans.user"%>
 
 <!DOCTYPE html>
@@ -21,14 +22,31 @@
     <!-- Load fonts style after rendering the layout styles -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
     <link rel="stylesheet" href="assets/css/fontawesome.min.css">
-
+	
 </head>
 <body>
 	<%
 		String userid = null;
 		if(session.getAttribute("userid") != null){
 			userid = (String)session.getAttribute("userid");
+		}	
+	
+		int Qnumber =0;
+		if (request.getParameter("Qnumber") != null){
+			Qnumber = Integer.parseInt(request.getParameter("Qnumber"));
 		}
+		if(Qnumber ==0){
+			PrintWriter script = response.getWriter();
+			script.println("<script>");
+			script.println("alert('유효하지 않은 접근입니다.')");
+			script.println("location.href='QNAboard.jsp'");
+			script.println("</script>");
+		}
+		DAO dao = new DAO();
+		dao.connect();
+		qboard qboard= dao.getQboard(Qnumber);
+		
+		
 	%>
  <!-- Header -->
     <nav class="navbar navbar-expand-lg navbar-light shadow">
@@ -69,7 +87,7 @@
                     <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal" data-bs-target="#templatemo_search">
                         <i class="fa fa-fw fa-search text-dark mr-2"></i>
                     </a>
-                    <a class="nav-icon position-relative text-decoration-none" href="#">
+                    <a class="nav-icon position-relative text-decoration-none" href="login.jsp">
                         <i class="fa fa-fw fa-user text-dark mr-3"></i>
 <!--                          <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">+99</span>
 -->
@@ -84,31 +102,31 @@
     <!-- Write -->
 	<div class="container">
 		<div class="row">
-			<form method="post" action="act_write.jsp">
+			
 				<table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
 					<thead>
 						<tr>
-							<th colspan="2" style="background-color: #eeeeee; text-align: center;">Q&A 질문</th>
+							<th colspan="3" style="background-color: #eeeeee; text-align: center;">게시글</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
-							<td><input type="text" class="form-control" placeholder="글 제목" name="Title" maxlength="50"></td>
+							<td sttyle="width: 20%;">제목</td>
+							<td colspan="2"><%=qboard.getTitle().replaceAll(" ","&nbsp;").replaceAll("<","&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
 						</tr>
 						<tr>
-							<td><textarea class="form-control" placeholder="글 내용 (500자 이내)" name="Content" maxlength=500 style="height: 350px;"></textarea></td>
+							<td>글작성자</td>
+							<td colspan="2"><%=dao.getNick(qboard.getUserID())%></td>
+						</tr>
+						<tr>
+							<td>내용</td>
+							<td colspan="2" style="min-height: 200px; text-align:left"><%=qboard.getContent().replaceAll(" ","&nbsp;").replaceAll("<","&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
 						</tr>
 					</tbody>
 				</table>
-				<div  align="right">
-				<!-- 취소버튼 -->
-				<input type="button" class="btn btn-primary pull-left" OnClick="javascript:history.back(-1)" value="취소">
-				<!-- 글쓰기 버튼 생성 -->
-				<input type="submit" class="btn btn-primary pull-right" value="글쓰기">
-				</div>
-			</form>
+				<a href="QNAboard.jsp" class="btn btn-primary">목록</a>
 		</div>
 	</div>
+				
 	<!-- Close Write -->
-</body>
 </html>

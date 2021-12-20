@@ -33,14 +33,16 @@ public class DAO {
 	// 사용자 아이디와 비밀번호를 parameter 받는다.
 	// 성공시 return 1 , 비밀번호 틀릴시 return 0, 아이디틀림 return -1 , 그외 오류 -2 
 	public int login(String UserID, String PW) {
-		String sql = "select PW from user where UserID = ?";
+		String sql = "SELECT PW FROM user WHERE UserID = ?";
+		
+	
 		try {
 			PreparedStatement ps= con.prepareStatement(sql);
 			ps.setString(1, UserID);
 			rs = ps.executeQuery();
 			
 			while(rs.next()) {
-				if(rs.getNString(1).equals(PW)){
+				if(rs.getString(1).equals(PW)){
 					//성공
 					return 1;
 				}else
@@ -94,7 +96,7 @@ public class DAO {
 	
 	// 현재 마지막 글번호 후 숫자를 리턴해줌.
 	public int getNext() {
-		String sql = "SELECT Qnumber FROM qboard ORDER BY bbsID DESC";
+		String sql = "SELECT Qnumber FROM qboard ORDER BY Qnumber DESC";
 		try {
 			PreparedStatement ps=con.prepareStatement(sql);
 			rs = ps.executeQuery();
@@ -111,7 +113,7 @@ public class DAO {
 	// 있으면 true
 	// 없으면 false
 	public boolean nextPage(int pageNumber) {
-		String sql = "select * from bbs where bbsID < ? and bbsAvailable = 1";
+		String sql = "select * from qboard where Qnumber < ?";
 		try {
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setInt(1, getNext() - (pageNumber - 1) * 10);
@@ -153,4 +155,24 @@ public class DAO {
 		} return qboardList;
 	}
 	
+	public qboard getQboard(int Qnumber) {
+		String sql= "SELECT * FROM qboard WHERE Qnumber = ?";
+		try {
+			PreparedStatement ps= con.prepareStatement(sql);
+			ps.setInt(1, Qnumber);
+			rs= ps.executeQuery();
+			if(rs.next()) {
+				qboard qboard = new qboard();
+				qboard.setQnumber(rs.getInt(1));
+				qboard.setTitle(rs.getNString(2));
+				qboard.setContent(rs.getNString(3));
+				qboard.setUserID(rs.getNString(4));
+				
+				return qboard;
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

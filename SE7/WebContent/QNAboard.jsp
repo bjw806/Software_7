@@ -2,7 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@page import="java.io.PrintWriter"%>
 <%@page import="dao.DAO"%>
-<%@page import="beans.*"%>
+<%@page import="beans.qboard"%>
+<%@page import="beans.user"%>
 <%@page import="java.util.ArrayList" %>
 <%@page import="java.io.PrintWriter"%>
 <!DOCTYPE html>
@@ -44,6 +45,15 @@
 </head>
 
 <body>
+	<%
+		//세션체크
+		String userid = null;
+		if(session.getAttribute("userid") != null){
+			userid = (String)session.getAttribute("userid");
+		}
+		
+		
+	%>
     <!-- Start Top Nav -->
     <nav class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block" id="templatemo_nav_top">
         <div class="container text-light">
@@ -154,19 +164,21 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
+					
 						<% 
 							ArrayList<qboard> qboardList = dao.getQboardList(pageNumber);
 							for(int i = 0; i < qboardList.size() ;i++)
 							{
 						%>
+						<tr>
 						<td><%=qboardList.get(i).getQnumber()%></td>
-						<td><a href="QNAview.jsp?Qnumber=<%=qboardList.get(i).getQnumber()%>"><%=qboardList.get(i).getTitle()%></a></td>
+						<td><a href="QNAview.jsp?Qnumber=<%=qboardList.get(i).getQnumber()%>"><%=qboardList.get(i).getTitle().replaceAll(" ","&nbsp;").replaceAll("<","&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></td>
 						<td><%=dao.getNick(qboardList.get(i).getUserID())%></td>
+						</tr>
 						<%
 							}
 						%>
-					</tr>
+					
 				</tbody>
 			</table>
 			<!-- 글쓰기, 이전, 다음버튼 생성 -->
@@ -181,7 +193,18 @@
 			<%
 				}
 			%>
+			<%
+				
+				if(userid !=null){
+			%>
 			<a href="write.jsp" class="btn btn-primary pull-right">글쓰기</a>
+			<%
+				}else if(userid == null){
+			%>
+			<a href="login.jsp" class="btn btn-primary pull-right" onclick="alert('로그인을 하세요')">글쓰기</a>
+			<%
+				}
+			%>
 		</div>
     </div>
    
