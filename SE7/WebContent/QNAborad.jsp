@@ -30,6 +30,75 @@
         </div>
     </nav>
     <!-- Close Top Nav -->
+    
+    <!-- Header -->
+    <nav class="navbar navbar-expand-lg navbar-light shadow">
+        <div class="container d-flex justify-content-between align-items-center">
+
+            <a class="navbar-brand text-success logo h1 align-self-center" href="index.jsp">
+               	 재활용앱
+            </a>
+
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#templatemo_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="align-self-center collapse navbar-collapse flex-fill  d-lg-flex justify-content-lg-between" id="templatemo_main_nav">
+                <div class="flex-fill">
+                    <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.jsp">분리수거</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="scoreborad.jsp">재활용평가</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="QNAborad.jsp">Q&A</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+                <div class="navbar align-self-center d-flex">
+                    <div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="inputMobileSearch" placeholder="Search ...">
+                            <div class="input-group-text">
+                                <i class="fa fa-fw fa-search"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal" data-bs-target="#templatemo_search">
+                        <i class="fa fa-fw fa-search text-dark mr-2"></i>
+                    </a>
+                    <a class="nav-icon position-relative text-decoration-none" href="#">
+                        <i class="fa fa-fw fa-user text-dark mr-3"></i>
+<!--                          <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">+99</span>
+-->
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </nav>
+    <!-- Close Header -->
+
+	<!-- Start Banner -->
+    <section class="container">
+        <div class="container">
+            <div class="row align-items-center py-5">
+                <div class="col-md-8">
+                    <h1>QNA게시판</h1>
+                    <p>
+                      	설명 필요없으면 삭제
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <img src="assets/img/about-hero.svg" alt="About Hero">
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Close Banner -->
 
     <!-- Modal -->
     <div class="modal fade bg-white" id="templatemo_search" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -52,7 +121,29 @@
 
     <!-- Start Content -->
     <div class="container py-5">
-        <p>게시글 구현자리</p>
+        <div class="row">
+			<table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
+				<thead>
+					<tr>
+						<th style="background-color: #eeeeee; text-align: center;">번호</th>
+						<th style="background-color: #eeeeee; text-align: center;">제목</th>
+						<th style="background-color: #eeeeee; text-align: center;">작성자</th>
+						<th style="background-color: #eeeeee; text-align: center;">작성일</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<!-- 테스트 코드 -->
+						<td>인덱스 테스트</td>
+						<td>제목 테스트</td>
+						<td>홍길동</td>
+						<td>2020-07-13</td>
+					</tr>
+				</tbody>
+			</table>
+			<!-- 글쓰기 버튼 생성 -->
+			<a href="write.jsp" class="btn btn-primary pull-right">글쓰기</a>
+		</div>
     </div>
     <!-- End Content -->
 

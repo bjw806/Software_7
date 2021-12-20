@@ -57,10 +57,10 @@ https://templatemo.com/tm-559-zay-shop
                             <a class="nav-link" href="index.jsp">분리수거</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="about.jsp">재활용평가</a>
+                            <a class="nav-link" href="scoreborad.jsp">재활용평가</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="shop.jsp">Q&A</a>
+                            <a class="nav-link" href="QNAborad.jsp">Q&A</a>
                         </li>
                         
                     </ul>

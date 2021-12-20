@@ -56,10 +56,10 @@ https://templatemo.com/tm-559-zay-shop
                             <a class="nav-link" href="index.jsp">분리수거</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="about.jsp">재활용평가</a>
+                            <a class="nav-link" href="scoreborad.jsp">재활용평가</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="shop.jsp">Q&A</a>
+                            <a class="nav-link" href="QNAborad.jsp">Q&A</a>
                         </li>
                         
                     </ul>
@@ -106,11 +106,11 @@ https://templatemo.com/tm-559-zay-shop
     </div>
 
 
-
-    <section class="bg-success py-3">
+	<!-- Start Banner -->
+    <section class="container">
         <div class="container">
             <div class="row align-items-center py-5">
-                <div class="col-md-8 text-white">
+                <div class="col-md-8">
                     <h1>별점시스템 ~~</h1>
                     <p>
                       	별점시스템 설명하는곳
@@ -124,47 +124,36 @@ https://templatemo.com/tm-559-zay-shop
     </section>
     <!-- Close Banner -->
 
-    <!-- Start Section -->
-    <section class="container py-5">
-        <div class="row text-center pt-5 pb-3">
-            <div class="col-lg-6 m-auto">
-                <h1 class="h1">평가 게시글</h1>
-                
-            </div>
-        </div>
-        <div class="row">
-
-            <div OnClick="location.href ='./index.jsp'" class="col-md-6 col-lg-3 pb-5">
-                <div class="h-100 py-5 services-icon-wap shadow">
-                    <div class="h1 text-success text-center"><i class="fa fa-truck fa-lg"></i></div>
-                    <h2 class="h5 mt-4 text-center">제목<br>아래별점</h2>
-                    
-                </div>
-            </div>
-
-            <div OnClick="location.href ='./index.jsp'" class="col-md-6 col-lg-3 pb-5">
-                <div class="h-100 py-5 services-icon-wap shadow">
-                    <div class="h1 text-success text-center"><i class="fas fa-exchange-alt"></i></div>
-                    <h2 class="h5 mt-4 text-center">제목<br>아래별점</h2>
-                </div>
-            </div>
-
-            <div OnClick="location.href ='./index.jsp'" class="col-md-6 col-lg-3 pb-5">
-                <div class="h-100 py-5 services-icon-wap shadow">
-                    <div class="h1 text-success text-center"><i class="fa fa-percent"></i></div>
-                    <h2 class="h5 mt-4 text-center">제목<br>아래별점</h2>
-                </div>
-            </div>
-
-            <div OnClick="location.href ='./index.jsp'" class="col-md-6 col-lg-3 pb-5">
-                <div class="h-100 py-5 services-icon-wap shadow">
-                    <div class="h1 text-success text-center"><i class="fa fa-user"></i></div>
-                    <h2 class="h5 mt-4 text-center">제목<br>아래별점</h2>
-                </div>
-            </div>
-            
-        </div>
-    </section>
+   <!-- 게시판 메인 페이지 영역 시작 -->
+	<div class="container">
+		<div class="row">
+			<table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
+				<thead>
+					<tr>
+						<th style="background-color: #eeeeee; text-align: center;">번호</th>
+						<th style="background-color: #eeeeee; text-align: center;">제목</th>
+						<th style="background-color: #eeeeee; text-align: center;">작성자</th>
+						<th style="background-color: #eeeeee; text-align: center;">작성일</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<!-- 테스트 코드 -->
+						<td>인덱스 테스트</td>
+						<td>제목 테스트</td>
+						<td>홍길동</td>
+						<td>2020-07-13</td>
+					</tr>
+				</tbody>
+			</table>
+			<!-- 글쓰기 버튼 생성 -->
+			<a href="write.jsp" class="btn btn-primary pull-right">글쓰기</a>
+		</div>
+	</div>
+	<!-- 게시판 메인 페이지 영역 끝 -->
+	
+</body>
+</html>
     <!-- End Section -->
 
     
