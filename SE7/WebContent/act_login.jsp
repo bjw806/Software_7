@@ -3,9 +3,6 @@
 <%@page import="java.io.PrintWriter"%>
 <%@page import="dao.*"%>
 <%@page import="beans.*"%>
-<jsp:useBean id="user" class="beans.user" scope="page" />
-<jsp:setProperty name="user" property="userID" />
-<jsp:setProperty name="user" property="PW" />
 <% request.setCharacterEncoding("utf-8"); %>
 <!DOCTYPE html>
 <html>
@@ -20,7 +17,10 @@
 	
 	dao dao = new dao();
 	
-	int result = dao.login(user);
+	String userID= request.getParameter("userid");
+	String userPW= request.getParameter("pw");
+	
+	int result = dao.login(userID, userPW);
 	if(result == 1){
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
