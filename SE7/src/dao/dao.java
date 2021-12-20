@@ -34,19 +34,6 @@ public class dao {
 		return -2;
 	}
 	
-	public int signup(user user) {
-		String sql = "INSERT INTO user VALUES (?, ?, ?, ?)";
-		try {
-			ps.setNString(1, user.getUserID());
-			ps.setNString(2, user.getPW());
-			ps.setNString(3, user.getNickname());
-			ps.setInt(4, 1);
-
-			return ps.executeUpdate();
-		}catch(Exception e) {
-			e.printStackTrace();
-		}return -1; // 에러
-	}
 	
 	
 	
