@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="java.io.PrintWriter"%>
+<%@page import="dao.DAO"%>
+<%@page import="beans.*"%>
 <!DOCTYPE html>
 <head>
     <title>테스트용 </title>
@@ -133,7 +136,6 @@ https://templatemo.com/tm-559-zay-shop
 						<th style="background-color: #eeeeee; text-align: center;">번호</th>
 						<th style="background-color: #eeeeee; text-align: center;">제목</th>
 						<th style="background-color: #eeeeee; text-align: center;">작성자</th>
-						<th style="background-color: #eeeeee; text-align: center;">작성일</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -142,7 +144,6 @@ https://templatemo.com/tm-559-zay-shop
 						<td>인덱스 테스트</td>
 						<td>제목 테스트</td>
 						<td>홍길동</td>
-						<td>2020-07-13</td>
 					</tr>
 				</tbody>
 			</table>

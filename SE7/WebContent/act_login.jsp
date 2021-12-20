@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@page import="java.io.PrintWriter"%>
 <%@page import="dao.DAO"%>
-<%@page import="dao.DB"%>
 <%@page import="beans.*"%>
 <% request.setCharacterEncoding("utf-8"); %>
 <!DOCTYPE html>
@@ -13,10 +12,9 @@
 </head>
 <body>
 <%
-	DB db = new DB();
-	db.connect();
-	
 	DAO dao = new DAO();
+	dao.connect();
+	
 	
 	String userID= request.getParameter("userid");
 	String userPW= request.getParameter("pw");
