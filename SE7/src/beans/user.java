@@ -1,6 +1,7 @@
 package beans;
 
 public class user {
+	//role : admin: 0 , user: 1
 	private String UserID;
 	private String PW;
 	private String Nickname;

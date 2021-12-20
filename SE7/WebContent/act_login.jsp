@@ -4,7 +4,7 @@
 <%@page import="dao.*"%>
 <jsp:useBean id="user" class="beans.user" scope="page" />
 <jsp:setProperty name="user" property="userID" />
-<jsp:setProperty name="user" property="userPassword" />
+<jsp:setProperty name="user" property="PW" />
 <% request.setCharacterEncoding("utf-8"); %>
 <!DOCTYPE html>
 <html>
@@ -19,7 +19,7 @@
 	
 	dao dao = new dao();
 	
-	int result = dao.login(user.getUserID(),user.getPW());
+	int result = dao.login(user);
 	if(result == 1){
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
