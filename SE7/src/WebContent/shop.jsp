@@ -7,8 +7,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="apple-touch-icon" href="assets/img/recycling-box-icon.png">
-    <link rel="shortcut icon" type="image/x-icon" href="assets/img/box_favicon.ico">
+    <link rel="apple-touch-icon" href="assets/img/apple-icon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
 
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/templatemo.css">
@@ -50,10 +50,10 @@
                             <a class="nav-link" href="index.jsp">분리수거</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="scoreborad.jsp">재활용평가</a>
+                            <a class="nav-link" href="about.jsp">재활용평가</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="QNAborad.jsp">Q&A</a>
+                            <a class="nav-link" href="shop.jsp">Q&A</a>
                         </li>
                         
                     </ul>
@@ -81,24 +81,6 @@
         </div>
     </nav>
     <!-- Close Header -->
-
-	<!-- Start Banner -->
-    <section class="container">
-        <div class="container">
-            <div class="row align-items-center py-5">
-                <div class="col-md-8">
-                    <h1>QNA게시판</h1>
-                    <p>
-                      	설명 필요없으면 삭제
-                    </p>
-                </div>
-                <div class="col-md-4">
-                    <img src="assets/img/about-hero.svg" alt="About Hero">
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Close Banner -->
 
     <!-- Modal -->
     <div class="modal fade bg-white" id="templatemo_search" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

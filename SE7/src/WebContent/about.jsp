@@ -1,14 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
 <head>
     <title>테스트용 </title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="apple-touch-icon" href="assets/img/recycling-box-icon.png">
-    <link rel="shortcut icon" type="image/x-icon" href="assets/img/box_favicon.ico">
+    <link rel="apple-touch-icon" href="assets/img/apple-icon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
 
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/templatemo.css">
@@ -17,7 +16,13 @@
     <!-- Load fonts style after rendering the layout styles -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
     <link rel="stylesheet" href="assets/css/fontawesome.min.css">
+<!--
+    
+TemplateMo 559 Zay Shop
 
+https://templatemo.com/tm-559-zay-shop
+
+-->
 </head>
 
 <body>
@@ -30,7 +35,8 @@
         </div>
     </nav>
     <!-- Close Top Nav -->
-    
+
+
     <!-- Header -->
     <nav class="navbar navbar-expand-lg navbar-light shadow">
         <div class="container d-flex justify-content-between align-items-center">
@@ -50,10 +56,10 @@
                             <a class="nav-link" href="index.jsp">분리수거</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="scoreborad.jsp">재활용평가</a>
+                            <a class="nav-link" href="about.jsp">재활용평가</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="QNAborad.jsp">Q&A</a>
+                            <a class="nav-link" href="shop.jsp">Q&A</a>
                         </li>
                         
                     </ul>
@@ -82,24 +88,6 @@
     </nav>
     <!-- Close Header -->
 
-	<!-- Start Banner -->
-    <section class="container">
-        <div class="container">
-            <div class="row align-items-center py-5">
-                <div class="col-md-8">
-                    <h1>QNA게시판</h1>
-                    <p>
-                      	설명 필요없으면 삭제
-                    </p>
-                </div>
-                <div class="col-md-4">
-                    <img src="assets/img/about-hero.svg" alt="About Hero">
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Close Banner -->
-
     <!-- Modal -->
     <div class="modal fade bg-white" id="templatemo_search" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
@@ -119,9 +107,26 @@
 
 
 
-    <!-- Start Content -->
-    <div class="container py-5">
-        <div class="row">
+    <section class="container">
+        <div class="container">
+            <div class="row align-items-center py-5">
+                <div class="col-md-8 text-white">
+                    <h1>별점시스템 ~~</h1>
+                    <p>
+                      	별점시스템 설명하는곳
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <img src="assets/img/about-hero.svg" alt="About Hero">
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Close Banner -->
+
+   <!-- 게시판 메인 페이지 영역 시작 -->
+	<div class="container">
+		<div class="row">
 			<table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
 				<thead>
 					<tr>
@@ -144,10 +149,14 @@
 			<!-- 글쓰기 버튼 생성 -->
 			<a href="write.jsp" class="btn btn-primary pull-right">글쓰기</a>
 		</div>
-    </div>
-    <!-- End Content -->
+	</div>
+	<!-- 게시판 메인 페이지 영역 끝 -->
+	
+</body>
+</html>
+    <!-- End Section -->
 
-   
+    
 
 
     <!-- Start Footer 
@@ -206,7 +215,7 @@
                 <div class="col-auto me-auto">
                     <ul class="list-inline text-left footer-icons">
                         <li class="list-inline-item border border-light rounded-circle text-center">
-                            <a class="text-light text-decoration-none" target="_blank" href="http://facebook.com/"><i class="fab fa-facebook-f fa-lg fa-fw"></i></a>
+                            <a rel="nofollow" class="text-light text-decoration-none" target="_blank" href="http://fb.com/templatemo"><i class="fab fa-facebook-f fa-lg fa-fw"></i></a>
                         </li>
                         <li class="list-inline-item border border-light rounded-circle text-center">
                             <a class="text-light text-decoration-none" target="_blank" href="https://www.instagram.com/"><i class="fab fa-instagram fa-lg fa-fw"></i></a>
@@ -235,7 +244,7 @@
                     <div class="col-12">
                         <p class="text-left text-light">
                             Copyright &copy; 2021 Company Name 
-                            | Designed by <a rel="sponsored" href="https://templatemo.com" target="_blank">TemplateMo</a>
+                            | Designed by <a rel="sponsored" href="https://templatemo.com/page/1" target="_blank">TemplateMo</a>
                         </p>
                     </div>
                 </div>

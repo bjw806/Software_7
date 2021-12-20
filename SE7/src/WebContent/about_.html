@@ -1,14 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
     <title>테스트용 </title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="apple-touch-icon" href="assets/img/recycling-box-icon.png">
-    <link rel="shortcut icon" type="image/x-icon" href="assets/img/box_favicon.ico">
+    <link rel="apple-touch-icon" href="assets/img/apple-icon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
 
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/templatemo.css">
@@ -17,7 +16,13 @@
     <!-- Load fonts style after rendering the layout styles -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
     <link rel="stylesheet" href="assets/css/fontawesome.min.css">
+<!--
+    
+TemplateMo 559 Zay Shop
 
+https://templatemo.com/tm-559-zay-shop
+
+-->
 </head>
 
 <body>
@@ -30,12 +35,13 @@
         </div>
     </nav>
     <!-- Close Top Nav -->
-    
+
+
     <!-- Header -->
     <nav class="navbar navbar-expand-lg navbar-light shadow">
         <div class="container d-flex justify-content-between align-items-center">
 
-            <a class="navbar-brand text-success logo h1 align-self-center" href="index.jsp">
+            <a class="navbar-brand text-success logo h1 align-self-center" href="index.html">
                	 재활용앱
             </a>
 
@@ -47,13 +53,13 @@
                 <div class="flex-fill">
                     <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="index.jsp">분리수거</a>
+                            <a class="nav-link" href="index.html">분리수거</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="scoreborad.jsp">재활용평가</a>
+                            <a class="nav-link" href="about.html">재활용평가</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="QNAborad.jsp">Q&A</a>
+                            <a class="nav-link" href="shop.html">Q&A</a>
                         </li>
                         
                     </ul>
@@ -82,24 +88,6 @@
     </nav>
     <!-- Close Header -->
 
-	<!-- Start Banner -->
-    <section class="container">
-        <div class="container">
-            <div class="row align-items-center py-5">
-                <div class="col-md-8">
-                    <h1>QNA게시판</h1>
-                    <p>
-                      	설명 필요없으면 삭제
-                    </p>
-                </div>
-                <div class="col-md-4">
-                    <img src="assets/img/about-hero.svg" alt="About Hero">
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Close Banner -->
-
     <!-- Modal -->
     <div class="modal fade bg-white" id="templatemo_search" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
@@ -119,35 +107,67 @@
 
 
 
-    <!-- Start Content -->
-    <div class="container py-5">
-        <div class="row">
-			<table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
-				<thead>
-					<tr>
-						<th style="background-color: #eeeeee; text-align: center;">번호</th>
-						<th style="background-color: #eeeeee; text-align: center;">제목</th>
-						<th style="background-color: #eeeeee; text-align: center;">작성자</th>
-						<th style="background-color: #eeeeee; text-align: center;">작성일</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<!-- 테스트 코드 -->
-						<td>인덱스 테스트</td>
-						<td>제목 테스트</td>
-						<td>홍길동</td>
-						<td>2020-07-13</td>
-					</tr>
-				</tbody>
-			</table>
-			<!-- 글쓰기 버튼 생성 -->
-			<a href="write.jsp" class="btn btn-primary pull-right">글쓰기</a>
-		</div>
-    </div>
-    <!-- End Content -->
+    <section class="bg-success py-3">
+        <div class="container">
+            <div class="row align-items-center py-5">
+                <div class="col-md-8 text-white">
+                    <h1>별점시스템 ~~</h1>
+                    <p>
+                      	별점시스템 설명하는곳
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <img src="assets/img/about-hero.svg" alt="About Hero">
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Close Banner -->
 
-   
+    <!-- Start Section -->
+    <section class="container py-5">
+        <div class="row text-center pt-5 pb-3">
+            <div class="col-lg-6 m-auto">
+                <h1 class="h1">평가 게시글</h1>
+                
+            </div>
+        </div>
+        <div class="row">
+
+            <div OnClick="location.href ='./index.html'" class="col-md-6 col-lg-3 pb-5">
+                <div class="h-100 py-5 services-icon-wap shadow">
+                    <div class="h1 text-success text-center"><i class="fa fa-truck fa-lg"></i></div>
+                    <h2 class="h5 mt-4 text-center">제목<br>아래별점</h2>
+                    
+                </div>
+            </div>
+
+            <div OnClick="location.href ='./index.html'" class="col-md-6 col-lg-3 pb-5">
+                <div class="h-100 py-5 services-icon-wap shadow">
+                    <div class="h1 text-success text-center"><i class="fas fa-exchange-alt"></i></div>
+                    <h2 class="h5 mt-4 text-center">제목<br>아래별점</h2>
+                </div>
+            </div>
+
+            <div OnClick="location.href ='./index.html'" class="col-md-6 col-lg-3 pb-5">
+                <div class="h-100 py-5 services-icon-wap shadow">
+                    <div class="h1 text-success text-center"><i class="fa fa-percent"></i></div>
+                    <h2 class="h5 mt-4 text-center">제목<br>아래별점</h2>
+                </div>
+            </div>
+
+            <div OnClick="location.href ='./index.html'" class="col-md-6 col-lg-3 pb-5">
+                <div class="h-100 py-5 services-icon-wap shadow">
+                    <div class="h1 text-success text-center"><i class="fa fa-user"></i></div>
+                    <h2 class="h5 mt-4 text-center">제목<br>아래별점</h2>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+    <!-- End Section -->
+
+    
 
 
     <!-- Start Footer 
@@ -206,7 +226,7 @@
                 <div class="col-auto me-auto">
                     <ul class="list-inline text-left footer-icons">
                         <li class="list-inline-item border border-light rounded-circle text-center">
-                            <a class="text-light text-decoration-none" target="_blank" href="http://facebook.com/"><i class="fab fa-facebook-f fa-lg fa-fw"></i></a>
+                            <a rel="nofollow" class="text-light text-decoration-none" target="_blank" href="http://fb.com/templatemo"><i class="fab fa-facebook-f fa-lg fa-fw"></i></a>
                         </li>
                         <li class="list-inline-item border border-light rounded-circle text-center">
                             <a class="text-light text-decoration-none" target="_blank" href="https://www.instagram.com/"><i class="fab fa-instagram fa-lg fa-fw"></i></a>
@@ -235,7 +255,7 @@
                     <div class="col-12">
                         <p class="text-left text-light">
                             Copyright &copy; 2021 Company Name 
-                            | Designed by <a rel="sponsored" href="https://templatemo.com" target="_blank">TemplateMo</a>
+                            | Designed by <a rel="sponsored" href="https://templatemo.com/page/1" target="_blank">TemplateMo</a>
                         </p>
                     </div>
                 </div>
@@ -253,4 +273,5 @@
     <script src="assets/js/custom.js"></script>
     <!-- End Script -->
 </body>
+
 </html>
