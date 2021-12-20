@@ -3,7 +3,7 @@ import beans.*;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class dao {
+public class DAO {
 	private Connection con;
 	private PreparedStatement ps;
 	private ResultSet rs;

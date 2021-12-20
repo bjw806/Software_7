@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="java.io.PrintWriter"%>
-<%@page import="dao.*"%>
+<%@page import="dao.DAO"%>
+<%@page import="dao.DB"%>
 <%@page import="beans.*"%>
 <% request.setCharacterEncoding("utf-8"); %>
 <!DOCTYPE html>
@@ -12,10 +13,10 @@
 </head>
 <body>
 <%
-	db db = new db();
+	DB db = new DB();
 	db.connect();
 	
-	dao dao = new dao();
+	DAO dao = new DAO();
 	
 	String userID= request.getParameter("userid");
 	String userPW= request.getParameter("pw");
@@ -46,7 +47,6 @@
 		script.println("history.back()");
 		script.println("</script>");
 	}
-	
 %>
 	
 </body>
