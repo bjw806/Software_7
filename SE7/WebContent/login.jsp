@@ -3,8 +3,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+	<meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="assets/css/login-style.css">
+    <link rel="apple-touch-icon" href="assets/img/recycling-box-icon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/box_favicon.ico">
  </head>
 
   <body width="100%" height="100%">

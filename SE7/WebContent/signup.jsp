@@ -1,9 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+	<meta charset="UTF-8">
+	<link rel="apple-touch-icon" href="assets/img/recycling-box-icon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/box_favicon.ico">
     <link rel="stylesheet" type="text/css" href="assets/css/signup-style.css">
  </head>
 
