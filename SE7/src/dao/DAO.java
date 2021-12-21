@@ -81,7 +81,7 @@ public class DAO {
 		return -1;	// 에라
 	}
 	
-	// Q&A 게시판 글쓰기
+	// Q&A 게시판 질문 글쓰기
 	// 제목,내용,아이디(세션값)을 parameter로 받는다.
 	// 성공시 insert된 query수(=1) 실패시 -1
 	public int write(String Title, String Content,String UserID) {
@@ -98,6 +98,26 @@ public class DAO {
 			e.printStackTrace();
 		}return -1;
 		
+	}
+	
+	// Q&A 게시판 글쓰기
+	// 제목,내용,아이디(세션값)을 parameter로 받는다.
+	// 성공시 insert된 query수(=1) 실패시 -1
+	public int AsnwerWrite(String Title, String Content,String UserID , int Qnumber) {
+		String sql = "INSERT INTO ansBOARD(title, content, userid ,Qnumber) values(?,?,?,?)";
+		try {
+			PreparedStatement ps= con.prepareStatement(sql);
+				
+			ps.setNString(1, Title);
+			ps.setNString(2, Content);
+			ps.setNString(3, UserID);
+			ps.setInt(4, Qnumber);
+			
+			return ps.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}return -1;
+			
 	}
 	
 	// 아이디에 따른 닉네임을 출력해주는 함수
@@ -191,7 +211,9 @@ public class DAO {
 				qboard.setQnumber(rs.getInt(1));
 				qboard.setTitle(rs.getNString(2));
 				qboard.setContent(rs.getNString(3));
-				qboard.setUserID(rs.getNString(4));
+				qboard.setFilename(rs.getNString(4));
+				qboard.setFileRealName(rs.getNString(5));
+				qboard.setUserID(rs.getNString(6));
 				
 				qboardList.add(qboard);
 			}
@@ -212,7 +234,9 @@ public class DAO {
 				qboard.setQnumber(rs.getInt(1));
 				qboard.setTitle(rs.getNString(2));
 				qboard.setContent(rs.getNString(3));
-				qboard.setUserID(rs.getNString(4));
+				qboard.setFilename(rs.getNString(4));
+				qboard.setFileRealName(rs.getNString(5));
+				qboard.setUserID(rs.getNString(6));
 				
 				return qboard;
 			}
@@ -221,5 +245,73 @@ public class DAO {
 		} return null;
 	}
 	
+	// #File(#파일,#이미지) 업로드 다운로드 부분
+	
+	// File 업로드
+	public int uploadQNA(int Enumber, String fileName , String fileRealName) {
+		String sql = "INSERT INTO estipicture(Enumber,fileName,fileRealName) VALUES (?,?,?)";
+		try {
+			PreparedStatement ps= con.prepareStatement(sql);
+			ps.setInt(1, Enumber);
+			ps.setString(2,fileName);
+			ps.setString(3, fileRealName);
+			
+			return ps.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} return -1; // 에러
+	}
+	
+	// 글을 쓴 후에 가장 최신의 게시판DB 인덱스를 가져오는 함수
+	// 평가게시판이나 백과사전 같은 경우 필요.
+	// 글을 쓰고 난 뒤 이미지 파일을 DB에 저장할 때 저장될 인덱스를 찾는 것이 목적
+	// ::게시판에 맞게 변경해주세요.
+	public int getQnumber(String UserID) {
+		String sql= "SELECT MAX(Qnumber) FROM qboard WHERE UserID=?";
+		try {
+			PreparedStatement ps= con.prepareStatement(sql);
+			ps.setString(1, UserID);
+			rs= ps.executeQuery();
+			rs.next();
+			return rs.getInt(1);
+		} catch(Exception e) {
+			e.printStackTrace();
+		} return -1; // 에러
+	}
+	
+	// 각 이미지 경로 DB에서 진짜 이름을 가져오는 함수
+	// 현재는 Estipicture 에서 가져오는 중
+	public String getFileRealName(int Inumber) {
+		String sql = "SELECT fileRealName FROM estipicture WHERE Inumber=?";
+		try {
+			PreparedStatement ps= con.prepareStatement(sql);
+			ps.setInt(1, Inumber);
+			rs= ps.executeQuery();
+			rs.next();
+			return rs.getString(1);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} return null;
+	}
+	
+	public int getRole(String UserID) {
+		String sql = "SELECT role FROM user WHERE UserID=?";
+		
+		try {
+			PreparedStatement ps= con.prepareStatement(sql);
+			ps.setString(1, UserID);
+			rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				return rs.getInt(1);
+			}
+			
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}return -1;
+	}
+	
+		
 	
 }
