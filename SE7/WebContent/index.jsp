@@ -119,6 +119,7 @@
             <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="0" class="active"></li>
             <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="1"></li>
             <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="2"></li>
+            <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="3"></li>
         </ol>
         <div class="carousel-inner">
             <div class="carousel-item active">
@@ -145,7 +146,7 @@
                         </div>
                         <div class="col-lg-6 mb-0 d-flex align-items-center">
                             <div class="text-align-left">
-                                <h1 class="h1"><b>분리배출</b>4가지 원칙</h1>
+                                <h1 class="h1 text-success"><b>분리배출</b>4가지 원칙</h1>
                                 <h3 class="h2">2. 헹군다</h3>
                                 <p>재활 용품에 묻어 있는 이물질, 음식물등은 닦거나  <strong>꼭 헹궈서</strong> 배출합니다.
                                 </p>
@@ -162,7 +163,7 @@
                         </div>
                         <div class="col-lg-6 mb-0 d-flex align-items-center">
                             <div class="text-align-left">
-                                <h1 class="h1"><b>분리배출</b>4가지 원칙</h1>
+                                <h1 class="h1 text-success"><b>분리배출</b>4가지 원칙</h1>
                                 <h3 class="h2">3. 분리한다</h3>
                                 <p>
                                 	라벨 등의 다른 재질의 부분은  제거하여 배출합니다.
@@ -180,7 +181,7 @@
                         </div>
                         <div class="col-lg-6 mb-0 d-flex align-items-center">
                             <div class="text-align-left">
-                                <h1 class="h1"><b>분리배출</b>4가지 원칙</h1>
+                                <h1 class="h1 text-success"><b>분리배출</b>4가지 원칙</h1>
                                 <h3 class="h2">4. 섞지 않는다.</h3>
                                 <p>
                                 	종류별로 재질별로 구분하여 배출합니다.
