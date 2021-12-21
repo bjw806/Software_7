@@ -2,11 +2,12 @@
     pageEncoding="UTF-8"%>
 <%@page import="java.io.PrintWriter"%>
 <%@page import="User.UserDAO"%>
-<%@page import="User.scoreboard"%>
+<%@page import="User.qboard"%>
 <%@page import="User.User"%>
 <%@page import="java.util.ArrayList" %>
 <%@page import="java.io.PrintWriter"%>
 <!DOCTYPE html>
+<html>
 <head>
     <title>테스트용 </title>
     <meta charset="utf-8">
@@ -22,11 +23,7 @@
     <!-- Load fonts style after rendering the layout styles -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
     <link rel="stylesheet" href="assets/css/fontawesome.min.css">
-<!--
-    
-TemplateMo 559 Zay Shop
-https://templatemo.com/tm-559-zay-shop
--->
+</head>
 	<% 
 		UserDAO userdao = new UserDAO(); 
 		
@@ -35,8 +32,6 @@ https://templatemo.com/tm-559-zay-shop
 			pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
 		}
 	%>
-</head>
-
 <body>
 	<%
 		//세션체크
@@ -102,7 +97,6 @@ https://templatemo.com/tm-559-zay-shop
                     </a>
                 </div>
             </div>
-
         </div>
     </nav>
     <!-- Close Header -->
@@ -124,17 +118,17 @@ https://templatemo.com/tm-559-zay-shop
         </div>
     </div>
 
+    <!-- Start Banner Hero -->
 
-	<!-- Start Banner -->
-    <section class="container">
+    <!-- Start Categories of The Month -->
+    <section class="container py-5">
+       	<section class="container">
         <div class="container">
             <div class="row align-items-center py-5">
                 <div class="col-md-8">
-                    <h1>별점 게시판</h1>
+                    <h1>백과사전 게시판</h1>
                     <p>
-                      	분리수거 하기에 적당한 제품들이 있다면
-                      	쓸 땐 좋지만 분리수거할 땐 한숨나오는 제품들
-						공유하자
+                      	설명 필요없으면 삭제
                     </p>
                 </div>
                 <div class="col-md-4">
@@ -144,7 +138,24 @@ https://templatemo.com/tm-559-zay-shop
         </div>
     </section>
     <!-- Close Banner -->
-	<form action="searchs.jsp">
+
+    <!-- Modal -->
+    <div class="modal fade bg-white" id="templatemo_search" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="w-100 pt-1 mb-5 text-right">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="" method="get" class="modal-content modal-body border-0 p-0">
+                <div class="input-group mb-2">
+                    <input type="text" class="form-control" id="inputModalSearch" name="q" placeholder="Search ...">
+                    <button type="submit" class="input-group-text bg-success text-light">
+                        <i class="fa fa-fw fa-search text-white"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+	<form action="searchd.jsp">
 	<div align="right">
 		<select id="searchoption" name="searchoption">
 			<option value="Title">제목에서</option>
@@ -154,61 +165,58 @@ https://templatemo.com/tm-559-zay-shop
 		<input type="submit" class="btn btn-primary pull-right" value="검색">
 	</div>
 	</form>
-   <!-- 게시판 메인 페이지 영역 시작 -->
-	<div class="container">
-		<div class="row">
+    <!-- Start Content -->
+    <div class="container py-5">
+        <div class="row">
 			<table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
 				<thead>
 					<tr>
 						<th style="background-color: #eeeeee; text-align: center;">번호</th>
 						<th style="background-color: #eeeeee; text-align: center;">제목</th>
 						<th style="background-color: #eeeeee; text-align: center;">작성자</th>
-						<th style="background-color: #eeeeee; text-align: center;">별점</th>
 					</tr>
 				</thead>
 				<tbody>
 						<% 
-							ArrayList<scoreboard> SboardList = userdao.getSboardList(pageNumber);
-							for(int i = 0; i < SboardList.size(); i++)
+							ArrayList<qboard> QboardList = userdao.getSearchQ(request.getParameter("searchoption"), request.getParameter("searchtext"));
+							if (QboardList.size() == 0) {
+								PrintWriter script = response.getWriter();
+								script.println("<script>");
+								script.println("alert('검색결과가 없습니다.')");
+								script.println("history.back()");
+								script.println("</script>");
+							}
+							for(int i = 0; i < QboardList.size() ;i++)
 							{
 						%>
 						<tr>
-						<td><%=SboardList.get(i).getEnumber()%></td>
-						<td><a href="SboardView.jsp?Enumber=<%=SboardList.get(i).getEnumber()%>"><%=SboardList.get(i).getTitle().replaceAll(" ","&nbsp;").replaceAll("<","&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></td>
-						<td><%=userdao.getNick(SboardList.get(i).getUserID())%></td>
-						<td><%=userdao.outStar(SboardList.get(i).getStar())%></td>
+						<td><%=QboardList.get(i).getQnumber()%></td>
+						<td><a href="QNAview.jsp?Qnumber=<%=QboardList.get(i).getQnumber()%>"><%=QboardList.get(i).getTitle().replaceAll(" ","&nbsp;").replaceAll("<","&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></td>
+						<td><%=userdao.getNick(QboardList.get(i).getUserID())%></td>
 						</tr>
 						<%
 							}
 						%>
+					
 				</tbody>
 			</table>
-			<!-- 페이지 버튼 생성 -->
-			<div align="left">
+			<!-- 글쓰기, 이전, 다음버튼 생성 -->
 			<% 
 				if(pageNumber != 1){
 			%>
-				<a href="QNAboard.jsp?pageNumber=<%=pageNumber - 1 %>" class="btn btn-success btn-arrow-left">이전</a>
-			<%
-				}for(int i=0; i <10 ; i++){
-					if(userdao.endPage(pageNumber) < userdao.stratPage(pageNumber)+i){
-						break;
-					}
-			%>
-				<a href="QNAboard.jsp?pageNumber=<%=userdao.stratPage(pageNumber)+i%>" class="btn btn-outline-dark"><%=userdao.stratPage(pageNumber)+i %></a>
-			
+				<a href="index.jsp?pageNumber=<%=pageNumber - 1 %>" class="btn btn-success btn-arrow-left">이전</a>
 			<%
 				} if(userdao.nextPage(pageNumber+1)){
 			%>
-				<a href="QNAboard.jsp?pageNumber=<%=pageNumber + 1 %>" class="btn btn-success btn-arrow-left">다음</a>
+				<a href="index.jsp?pageNumber=<%=pageNumber + 1 %>" class="btn btn-success btn-arrow-left">다음</a>
 			<%
 				}
 			%>
+			
 			<%
-				
 				if(userid !=null){
 			%>
-			<a href="writesboard.jsp" class="btn btn-primary pull-right">글쓰기</a>
+			<a href="write_dic.jsp" class="btn btn-primary pull-right">글쓰기</a>
 			<%
 				}else if(userid == null){
 			%>
@@ -216,14 +224,10 @@ https://templatemo.com/tm-559-zay-shop
 			<%
 				}
 			%>
-			</div>
-	</div>
-	</div>
-	
-	<!-- 게시판 메인 페이지 영역 끝 -->
-	
-
-    <!-- End Section -->
+		</div>
+    </div>
+    </section>
+    <!-- End Categories of The Month -->
 
     <!-- Start Script -->
     <script src="assets/js/jquery-1.11.0.min.js"></script>

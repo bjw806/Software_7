@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.io.PrintWriter"%>
-<%@ page import="dao.DAO"%>
-<%@ page import="beans.user"%>
-<%@ page import="java.io.PrintWriter"%>
-<% request.setCharacterEncoding("utf-8"); %>
+<%@page import="java.io.PrintWriter"%>
+<%@page import="User.UserDAO"%>
+<%@page import="User.dicboard"%>
+<%@page import="User.User"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,33 +22,31 @@
     <!-- Load fonts style after rendering the layout styles -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
     <link rel="stylesheet" href="assets/css/fontawesome.min.css">
-
+	
 </head>
 <body>
 	<%
 		String userid = null;
 		if(session.getAttribute("userid") != null){
 			userid = (String)session.getAttribute("userid");
+		}	
+	
+		int Dnumber = 0;
+		if (request.getParameter("Dnumber") != null){
+			Dnumber = Integer.parseInt(request.getParameter("Dnumber"));
 		}
+		if(Dnumber == 0){
+			PrintWriter script = response.getWriter();
+			script.println("<script>");
+			script.println("alert('유효하지 않은 접근입니다.')");
+			script.println("location.href='QNAboard.jsp'");
+			script.println("</script>");
+		}
+		UserDAO userdao = new UserDAO();
 		
-		String title = request.getParameter("title");
-		String nick = request.getParameter("nick");
-		String content= request.getParameter("content");
-		int Qnumber = Integer.parseInt(request.getParameter("Qnumber"));
-		
+		dicboard dicboard = userdao.getDboard(Dnumber);
 		
 	%>
-	<script>
-  		function openCloseToc() {
-   		 if(document.getElementById('toc-content').style.display === 'block') {
-    		document.getElementById('toc-content').style.display = 'none';
-      		document.getElementById('toc-toggle').textContent = '질문글 열기';
-   		 } else {
-    		  document.getElementById('toc-content').style.display = 'block';
-     		 document.getElementById('toc-toggle').textContent = '질문글 닫기';
-   		 }
-  }
-</script>
  <!-- Header -->
     <nav class="navbar navbar-expand-lg navbar-light shadow">
         <div class="container d-flex justify-content-between align-items-center">
@@ -86,7 +84,7 @@
                         </div>
                     </div>
                     <%  
-                   		if (userid != null){
+                   	    if (userid != null){
 					%>
                     <a class="nav-icon position-relative text-decoration-none" href="option.jsp">
                     	개인정보
@@ -95,88 +93,50 @@
                     	로그아웃
                         <i class="fas fa-sign-out-alt text-dark mr-3"></i></a>
                    <%
-                   	} else if (userid == null){
+                        } else if (userid == null){
 					%>
                     <a class="nav-icon position-relative text-decoration-none" href="login.jsp">
                     	로그인
                         <i class="fa fa-fw fa-user text-dark mr-3"></i></a>
                    <%
-                  	 }
+                        }
                    %>
-<!--                          <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">+99</span>
--->
-                    </a>
                 </div>
             </div>
 
         </div>
     </nav>
     <!-- Close Header -->
+    <!-- Write -->
     
-    <!-- Q view -->
-   <div id="toc-content">
-    <div class="container">
+    
+	<div class="container">
 		<div class="row">
+			
 				<table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
 					<thead>
 						<tr>
-							<th colspan="2" style="background-color: #eeeeee; text-align: center;"><%=title%></th>
+							<th colspan="3" style="background-color: #eeeeee; text-align: center;">게시글</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
-							<td>글작성자</td>
-							<td colspan="2"><%=nick%></td>
+							<td style="width: 20%;">제목</td>
+							<td colspan="2"><%=dicboard.getTitle().replaceAll(" ","&nbsp;").replaceAll("<","&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
 						</tr>
 						<tr>
-							<td colspan="2" style="text-align:left"><%=content%></td>
+							<td>글작성자</td>
+							<td colspan="2"><%=userdao.getNick(dicboard.getUserID())%></td>
 						</tr>
-							
+						<tr>
+							<td>내용</td>
+							<td colspan="2" style="min-height: 200px; text-align:left"><%=dicboard.getContent().replaceAll(" ","&nbsp;").replaceAll("<","&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
+						</tr>
 					</tbody>
-					
 				</table>
-			
+				<a href="index.jsp" class="btn btn-primary">목록</a>
 		</div>
 	</div>
 	
-</div>
-    <!-- Close Q view -->
-    
-    <!-- Write -->
-	<div class="container">
-		<div class="row" >
-			<form method="post" action="act_AsnwerWrite.jsp">
-				<table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
-					<thead>
-						<tr>
-							<th colspan="2" style="background-color: #eeeeee; text-align: center;">Q&amp;A 답변</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td><input type="text" class="form-control" placeholder="글 제목" name="Title" maxlength="50"></td>
-						</tr>
-						<tr>
-							<td><textarea class="form-control" placeholder="글 내용 (500자 이내)" name="Content" maxlength=500 style="height: 350px;"></textarea></td>
-						</tr>
-					
-							
-					</tbody>
-					
-				</table>
-				<input type="hidden" name="Qnumber" value="<%=Qnumber%>">
-				
-				
-				<div  align="right">
-				<!-- 취소버튼 -->
-				<input type="button" class="btn btn-primary pull-left" OnClick="javascript:history.back(-1)" value="취소">
-				<!-- 질문글 여닫기 -->
-				<button type="button" id="toc-toggle" onclick="openCloseToc()" class="btn btn-primary" data-toggle="collapse" data-target="#qview">질문글 닫기</button>
-				
-				<!-- 글쓰기 버튼 생성 -->
-				<input type="submit" class="btn btn-primary pull-right" value="답변등록">
-				</div>
-			</form>
-		</div>
-	</div>
 	<!-- Close Write -->
+</html>

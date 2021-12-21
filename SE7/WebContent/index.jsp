@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="java.io.PrintWriter"%>
+<%@page import="User.UserDAO"%>
+<%@page import="User.dicboard"%>
+<%@page import="User.User"%>
+<%@page import="java.util.ArrayList" %>
+<%@page import="java.io.PrintWriter"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,17 +23,22 @@
     <!-- Load fonts style after rendering the layout styles -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
     <link rel="stylesheet" href="assets/css/fontawesome.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css">
-
 </head>
-
+	<% 
+		UserDAO userdao = new UserDAO(); 
+		
+		int pageNumber = 1;
+		if(request.getParameter("pageNumber") != null){
+			pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
+		}
+	%>
 <body>
 	<%
-	String userid = null;
-	if(session.getAttribute("userid") != null){
-		userid = (String)session.getAttribute("userid");
-	}
-	
+		//세션체크
+		String userid = null;
+		if(session.getAttribute("userid") != null){
+			userid = (String)session.getAttribute("userid");
+		}
 	%>
     <!-- Start Top Nav -->
     <nav class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block" id="templatemo_nav_top">
@@ -65,7 +76,6 @@
                             <a class="nav-link" href="QNAboard.jsp">Q&A</a>
                         </li>
                         
-                        
                     </ul>
                 </div>
                 <div class="navbar align-self-center d-flex">
@@ -77,11 +87,8 @@
                             </div>
                         </div>
                     </div>
-                    <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal" data-bs-target="#templatemo_search">
-                        <i class="fa fa-fw fa-search text-dark mr-2"></i>
-                    </a>
-                   <%  
-                   	if (userid != null){
+                    <%  
+                   	    if (userid != null){
 					%>
                     <a class="nav-icon position-relative text-decoration-none" href="option.jsp">
                     	개인정보
@@ -89,41 +96,22 @@
                     <a class="nav-icon position-relative text-decoration-none" href="act_logout.jsp">
                     	로그아웃
                         <i class="fas fa-sign-out-alt text-dark mr-3"></i></a>
-                   <%} else if (userid == null){
+                   <%
+                        } else if (userid == null){
 					%>
                     <a class="nav-icon position-relative text-decoration-none" href="login.jsp">
                     	로그인
                         <i class="fa fa-fw fa-user text-dark mr-3"></i></a>
-                   <%}
+                   <%
+                        }
                    %>
-<!--                          <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">+99</span>
--->
-                    </a>
                 </div>
             </div>
-
         </div>
     </nav>
     <!-- Close Header -->
 
-    <!-- Modal -->
-    <div class="modal fade bg-white" id="templatemo_search" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="w-100 pt-1 mb-5 text-right">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form action="" method="get" class="modal-content modal-body border-0 p-0">
-                <div class="input-group mb-2">
-                    <input type="text" class="form-control" id="inputModalSearch" name="q" placeholder="Search ...">
-                    <button type="submit" class="input-group-text bg-success text-light">
-                        <i class="fa fa-fw fa-search text-white"></i>
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-
+   
 
     <!-- Start Banner Hero -->
     <div id="template-mo-zay-hero-carousel" class="carousel slide" data-bs-ride="carousel">
@@ -141,15 +129,9 @@
                         </div>
                         <div class="col-lg-6 mb-0 d-flex align-items-center">
                             <div class="text-align-left align-self-center">
-                                <h1 class="h1 text-success"><b>Zay</b> eCommerce</h1>
-                                <h3 class="h2">Tiny and Perfect eCommerce Template</h3>
-                                <p>
-                                    Zay Shop is an eCommerce HTML5 CSS template with latest version of Bootstrap 5 (beta 1). 
-                                    This template is 100% free provided by <a rel="sponsored" class="text-success" href="https://templatemo.com" target="_blank">TemplateMo</a> website. 
-                                    Image credits go to <a rel="sponsored" class="text-success" href="https://stories.freepik.com/" target="_blank">Freepik Stories</a>,
-                                    <a rel="sponsored" class="text-success" href="https://unsplash.com/" target="_blank">Unsplash</a> and
-                                    <a rel="sponsored" class="text-success" href="https://icons8.com/" target="_blank">Icons 8</a>.
-                                </p>
+                                <h1 class="h1 text-success"><b>분리배출</b>4가지 원칙</h1>
+                                <h3 class="h2">1. 비운다</h3>
+                                <p> 용기 안에 담겨있는 내용물은 깨끗이 비워주세요.</p>
                             </div>
                         </div>
                     </div>
@@ -163,11 +145,9 @@
                         </div>
                         <div class="col-lg-6 mb-0 d-flex align-items-center">
                             <div class="text-align-left">
-                                <h1 class="h1">Proident occaecat</h1>
-                                <h3 class="h2">Aliquip ex ea commodo consequat</h3>
-                                <p>
-                                    You are permitted to use this Zay CSS template for your commercial websites. 
-                                    You are <strong>not permitted</strong> to re-distribute the template ZIP file in any kind of template collection websites.
+                                <h1 class="h1"><b>분리배출</b>4가지 원칙</h1>
+                                <h3 class="h2">2. 헹군다</h3>
+                                <p>재활 용품에 묻어 있는 이물질, 음식물등은 닦거나  <strong>꼭 헹궈서</strong> 배출합니다.
                                 </p>
                             </div>
                         </div>
@@ -182,11 +162,28 @@
                         </div>
                         <div class="col-lg-6 mb-0 d-flex align-items-center">
                             <div class="text-align-left">
-                                <h1 class="h1">Repr in voluptate</h1>
-                                <h3 class="h2">Ullamco laboris nisi ut </h3>
+                                <h1 class="h1"><b>분리배출</b>4가지 원칙</h1>
+                                <h3 class="h2">3. 분리한다</h3>
                                 <p>
-                                    We bring you 100% free CSS templates for your websites. 
-                                    If you wish to support TemplateMo, please make a small contribution via PayPal or tell your friends about our website. Thank you.
+                                	라벨 등의 다른 재질의 부분은  제거하여 배출합니다.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="container">
+                    <div class="row p-5">
+                        <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+                            <img class="img-fluid" src="./assets/img/banner_img_04.jpg" alt="">
+                        </div>
+                        <div class="col-lg-6 mb-0 d-flex align-items-center">
+                            <div class="text-align-left">
+                                <h1 class="h1"><b>분리배출</b>4가지 원칙</h1>
+                                <h3 class="h2">4. 섞지 않는다.</h3>
+                                <p>
+                                	종류별로 재질별로 구분하여 배출합니다.
                                 </p>
                             </div>
                         </div>
@@ -203,62 +200,9 @@
     </div>
     <!-- End Banner Hero -->
 
-
     <!-- Start Categories of The Month -->
-    <section class="container py-5">
-        <div class="row text-center pt-3">
-            <div class="col-lg-6 m-auto">
-                <h1 class="h1">분리수거 정보</h1>
-                <p>
-                    	분리수거 내용
-                </p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-4 col-md-3 p-4 mt-2">
-                <a href="#"><img src="./assets/img/category_img_01.jpg" class="rounded-circle img-fluid border"></a>
-                <h5 class="text-center mt-3 mb-3">Watches</h5>
-                <p class="text-center"><a class="btn btn-success">이름</a></p>
-            </div>
-            <div class="col-4 col-md-3 p-4 mt-2">
-                <a href="#"><img src="./assets/img/category_img_02.jpg" class="rounded-circle img-fluid border"></a>
-                <h2 class="h5 text-center mt-3 mb-3">Shoes</h2>
-                <p class="text-center"><a class="btn btn-success">이름</a></p>
-            </div>
-            <div class="col-4 col-md-3 p-4 mt-2">
-                <a href="#"><img src="./assets/img/category_img_03.jpg" class="rounded-circle img-fluid border"></a>
-                <h2 class="h5 text-center mt-3 mb-3">Accessories</h2>
-                <p class="text-center"><a class="btn btn-success">이름</a></p>
-            </div>
-             <div class="col-4 col-md-3 p-4 mt-2">
-                <a href="#"><img src="./assets/img/category_img_01.jpg" class="rounded-circle img-fluid border"></a>
-                <h5 class="text-center mt-3 mb-3">Watches</h5>
-                <p class="text-center"><a class="btn btn-success">이름</a></p>
-            </div>
-            <div class="col-4 col-md-3 p-4 mt-2">
-                <a href="#"><img src="./assets/img/category_img_01.jpg" class="rounded-circle img-fluid border"></a>
-                <h5 class="text-center mt-3 mb-3">Watches</h5>
-                <p class="text-center"><a class="btn btn-success">이름</a></p>
-            </div>
-            <div class="col-4 col-md-3 p-4 mt-2">
-                <a href="#"><img src="./assets/img/category_img_02.jpg" class="rounded-circle img-fluid border"></a>
-                <h2 class="h5 text-center mt-3 mb-3">Shoes</h2>
-                <p class="text-center"><a class="btn btn-success">이름</a></p>
-            </div>
-            <div class="col-4 col-md-3 p-4 mt-2">
-                <a href="#"><img src="./assets/img/category_img_03.jpg" class="rounded-circle img-fluid border"></a>
-                <h2 class="h5 text-center mt-3 mb-3">Accessories</h2>
-                <p class="text-center"><a class="btn btn-success">이름</a></p>
-            </div>
-             <div class="col-4 col-md-3 p-4 mt-2">
-                <a href="#"><img src="./assets/img/category_img_01.jpg" class="rounded-circle img-fluid border"></a>
-                <h5 class="text-center mt-3 mb-3">Watches</h5>
-                <p class="text-center"><a class="btn btn-success">이름</a></p>
-            </div>
-        </div>
-    </section>
     
-
+    <!-- End Categories of The Month -->
 
     <!-- Start Script -->
     <script src="assets/js/jquery-1.11.0.min.js"></script>

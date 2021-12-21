@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="java.io.PrintWriter"%>
-<%@page import="dao.DAO"%>
-<%@page import="beans.qboard"%>
-<%@page import="beans.user"%>
+<%@page import="User.UserDAO"%>
+<%@page import="User.qboard"%>
+<%@page import="User.User"%>
 <%@page import="java.util.ArrayList" %>
 <%@page import="java.io.PrintWriter"%>
 <!DOCTYPE html>
@@ -32,15 +32,12 @@
     </style>
     
 	<% 
-		DAO dao = new DAO(); 
-		dao.connect();
+		UserDAO userdao = new UserDAO(); 
 		
 		int pageNumber = 1;
 		if(request.getParameter("pageNumber") != null){
 			pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
 		}
-		
-		
 	%>
 </head>
 
@@ -51,8 +48,6 @@
 		if(session.getAttribute("userid") != null){
 			userid = (String)session.getAttribute("userid");
 		}
-		
-		
 	%>
     <!-- Start Top Nav -->
     <nav class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block" id="templatemo_nav_top">
@@ -88,7 +83,6 @@
                         <li class="nav-item">
                             <a class="nav-link" href="QNAboard.jsp">Q&A</a>
                         </li>
-                        
                     </ul>
                 </div>
                 <div class="navbar align-self-center d-flex">
@@ -100,21 +94,31 @@
                             </div>
                         </div>
                     </div>
-                    <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal" data-bs-target="#templatemo_search">
-                        <i class="fa fa-fw fa-search text-dark mr-2"></i>
-                    </a>
-                    <a class="nav-icon position-relative text-decoration-none" href="#">
-                        <i class="fa fa-fw fa-user text-dark mr-3"></i>
-<!--                          <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">+99</span>
--->
-                    </a>
+                    <%  
+                   	    if (userid != null){
+					%>
+                    <a class="nav-icon position-relative text-decoration-none" href="option.jsp">
+                    	개인정보
+                        <i class="fa fa-fw fa-user text-dark mr-3"></i></a>
+                    <a class="nav-icon position-relative text-decoration-none" href="act_logout.jsp">
+                    	로그아웃
+                        <i class="fas fa-sign-out-alt text-dark mr-3"></i></a>
+                   <%
+                        } else if (userid == null){
+					%>
+                    <a class="nav-icon position-relative text-decoration-none" href="login.jsp">
+                    	로그인
+                        <i class="fa fa-fw fa-user text-dark mr-3"></i></a>
+                   <%
+                        }
+                   %>
                 </div>
             </div>
 
         </div>
     </nav>
     <!-- Close Header -->
-
+	
 	<!-- Start Banner -->
     <section class="container">
         <div class="container">
@@ -122,7 +126,6 @@
                 <div class="col-md-8">
                     <h1>Q&A게시판</h1>
                     <p>
-                      	설명 필요없으면 삭제
                     </p>
                 </div>
                 <div class="col-md-4">
@@ -149,9 +152,16 @@
             </form>
         </div>
     </div>
-
-
-
+	<form action="searchq.jsp">
+	<div align="right">
+		<select id="searchoption" name="searchoption">
+			<option value="Title">제목에서</option>
+			<option value="UserID">작성자에서</option>
+		</select>
+		<input type="text" id="searchtext" name="searchtext" size=10>
+		<input type="submit" class="btn btn-primary pull-right" value="검색">
+	</div>
+	</form>
     <!-- Start Content -->
     <div class="container py-5">
         <div class="row">
@@ -164,19 +174,15 @@
 					</tr>
 				</thead>
 				<tbody>
-					
 						<% 
-							ArrayList<qboard> qboardList = dao.getQboardList(pageNumber);
-							
+							ArrayList<qboard> qboardList = userdao.getQboardList(pageNumber);
 							for(int i = 0; i < qboardList.size() ;i++)
-							{ 
-								
+							{
 						%>
 						<tr>
 						<td><%=qboardList.get(i).getQnumber()%></td>
 						<td><a href="QNAview.jsp?Qnumber=<%=qboardList.get(i).getQnumber()%>"><%=qboardList.get(i).getTitle().replaceAll(" ","&nbsp;").replaceAll("<","&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></td>
-
-						<td><%=dao.getNick(qboardList.get(i).getUserID())%></td>
+						<td><%=userdao.getNick(qboardList.get(i).getUserID())%></td>
 						</tr>
 						<%
 							}
@@ -184,7 +190,7 @@
 					
 				</tbody>
 			</table>
-			<!-- 글쓰기, 이전, 다음버튼 생성 -->
+			<!-- 페이지 버튼 생성 -->
 			<div align="left">
 			<% 
 				if(pageNumber != 1){
@@ -192,14 +198,14 @@
 				<a href="QNAboard.jsp?pageNumber=<%=pageNumber - 1 %>" class="btn btn-success btn-arrow-left">이전</a>
 			<%
 				}for(int i=0; i <10 ; i++){
-					if(dao.endPage(pageNumber) < dao.stratPage(pageNumber)+i){
+					if(userdao.endPage(pageNumber) < userdao.stratPage(pageNumber)+i){
 						break;
 					}
 			%>
-				<a href="QNAboard.jsp?pageNumber=<%=dao.stratPage(pageNumber)+i%>" class="btn btn-outline-dark"><%=dao.stratPage(pageNumber)+i %></a>
+				<a href="QNAboard.jsp?pageNumber=<%=userdao.stratPage(pageNumber)+i%>" class="btn btn-outline-dark"><%=userdao.stratPage(pageNumber)+i %></a>
 			
 			<%
-				} if(dao.nextPage(pageNumber+1)){
+				} if(userdao.nextPage(pageNumber+1)){
 			%>
 				<a href="QNAboard.jsp?pageNumber=<%=pageNumber + 1 %>" class="btn btn-success btn-arrow-left">다음</a>
 			<%

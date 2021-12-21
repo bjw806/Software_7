@@ -3,9 +3,6 @@
 <%@page import="java.io.PrintWriter"%>
 <%@page import="User.UserDAO"%>
 <%@page import="User.User"%>
-<%@ page import="java.util.Enumeration" %>
-<%@ page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
-<%@ page import="com.oreilly.servlet.MultipartRequest"%>
 
 <!DOCTYPE html>
 <html>
@@ -69,14 +66,24 @@
                             </div>
                         </div>
                     </div>
-                    <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal" data-bs-target="#templatemo_search">
-                        <i class="fa fa-fw fa-search text-dark mr-2"></i>
-                    </a>
-                    <a class="nav-icon position-relative text-decoration-none" href="#">
-                        <i class="fa fa-fw fa-user text-dark mr-3"></i>
-<!--                          <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">+99</span>
--->
-                    </a>
+                    <%  
+                   	    if (userid != null){
+					%>
+                    <a class="nav-icon position-relative text-decoration-none" href="option.jsp">
+                    	개인정보
+                        <i class="fa fa-fw fa-user text-dark mr-3"></i></a>
+                    <a class="nav-icon position-relative text-decoration-none" href="act_logout.jsp">
+                    	로그아웃
+                        <i class="fas fa-sign-out-alt text-dark mr-3"></i></a>
+                   <%
+                        } else if (userid == null){
+					%>
+                    <a class="nav-icon position-relative text-decoration-none" href="login.jsp">
+                    	로그인
+                        <i class="fa fa-fw fa-user text-dark mr-3"></i></a>
+                   <%
+                        }
+                   %>
                 </div>
             </div>
 
@@ -87,27 +94,40 @@
     <!-- Write -->
 	<div class="container">
 		<div class="row">
-			<form method="post" action="act_write.jsp" enctype="multipart/form-data">
+			<form method="post" action="act_sbwrite.jsp">
 				<table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
 					<thead>
 						<tr>
-							<th colspan="2" style="background-color: #eeeeee; text-align: center;">Q&A 질문</th>
+							<th colspan="10" style="background-color: #eeeeee; text-align: center;">평가 게시판</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
-							<td><input type="text" class="form-control" placeholder="글 제목" name="Title" maxlength="50"></td>
+							<td  style="border: none; width:80%"><input type="text" class="form-control" placeholder="글 제목" name="Title" maxlength="50"></td>
+							<td style="width:20%">
+								<label>평점 : </label>
+								<select id="Star" name="Star">
+									<option value="0">☆☆☆☆☆</option>
+									<option value="1">★☆☆☆☆</option>
+									<option value="2">★★☆☆☆</option>
+									<option value="3">★★★☆☆</option>
+									<option value="4">★★★★☆</option>
+									<option value="5">★★★★★</option>
+								</select>
+							</td>
 						</tr>
 						<tr>
-							<td><textarea class="form-control" placeholder="글 내용 (500자 이내)" name="Content" maxlength=500 style="height: 350px;"></textarea></td>
+							<td colspan="8"><textarea class="form-control" placeholder="글 내용 (500자 이내)" name="Content" maxlength=500 style="height: 350px;"></textarea></td>
+							<td colspan="2"><a id='View_area' style='position:relative; width: 200px; height: 150px; color: black; border: 0px solid black; dispaly: inline; '>미리보기</a></td>
 						</tr>
 					</tbody>
 				</table>
-				
+	<!-- Close Write -->
+	
+	<!-- Sample image -->
 				<input type="file" name="file" id="file" onchange="previewImage(this,'View_area')">
 				<div id='View_area' style='position:relative; width: 200px; height: 150px; color: black; border: 0px solid black; dispaly: inline; '></div>
-				
-				
+	<!-- Close Sample image -->
 				<div  align="right">
 				<!-- 취소버튼 -->
 				<input type="button" class="btn btn-primary pull-left" OnClick="javascript:history.back(-1)" value="취소">
@@ -182,6 +202,8 @@
 				}
 				</script>
 				<!-- 미리보기 script 끝 -->
+				
+				
 			</form>
 		</div>
 	</div>

@@ -92,7 +92,7 @@ https://templatemo.com/tm-559-zay-shop
                             </div>
                         </div>
                     </div>
-                    <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal" data-bs-target="#templatemo_search">
+                    <a class="nav-icon d-none d-lg-inline" href="search.jsp" data-bs-toggle="modal" data-bs-target="#templatemo_search">
                         <i class="fa fa-fw fa-search text-dark mr-2"></i>
                     </a>
                     <a class="nav-icon position-relative text-decoration-none" href="login.jsp">
@@ -130,11 +130,9 @@ https://templatemo.com/tm-559-zay-shop
         <div class="container">
             <div class="row align-items-center py-5">
                 <div class="col-md-8">
-                    <h1>별점 게시판</h1>
+                    <h1>별점시스템 ~~</h1>
                     <p>
-                      	분리수거 하기에 적당한 제품들이 있다면
-                      	쓸 땐 좋지만 분리수거할 땐 한숨나오는 제품들
-						공유하자
+                      	별점시스템 설명하는곳
                     </p>
                 </div>
                 <div class="col-md-4">
@@ -144,16 +142,7 @@ https://templatemo.com/tm-559-zay-shop
         </div>
     </section>
     <!-- Close Banner -->
-	<form action="searchs.jsp">
-	<div align="right">
-		<select id="searchoption" name="searchoption">
-			<option value="Title">제목에서</option>
-			<option value="UserID">작성자에서</option>
-		</select>
-		<input type="text" id="searchtext" name="searchtext" size=10>
-		<input type="submit" class="btn btn-primary pull-right" value="검색">
-	</div>
-	</form>
+
    <!-- 게시판 메인 페이지 영역 시작 -->
 	<div class="container">
 		<div class="row">
@@ -163,7 +152,7 @@ https://templatemo.com/tm-559-zay-shop
 						<th style="background-color: #eeeeee; text-align: center;">번호</th>
 						<th style="background-color: #eeeeee; text-align: center;">제목</th>
 						<th style="background-color: #eeeeee; text-align: center;">작성자</th>
-						<th style="background-color: #eeeeee; text-align: center;">별점</th>
+						<th style="background-color: #eeeeee; text-align: center;">작성일</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -176,31 +165,20 @@ https://templatemo.com/tm-559-zay-shop
 						<td><%=SboardList.get(i).getEnumber()%></td>
 						<td><a href="SboardView.jsp?Enumber=<%=SboardList.get(i).getEnumber()%>"><%=SboardList.get(i).getTitle().replaceAll(" ","&nbsp;").replaceAll("<","&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></td>
 						<td><%=userdao.getNick(SboardList.get(i).getUserID())%></td>
-						<td><%=userdao.outStar(SboardList.get(i).getStar())%></td>
 						</tr>
 						<%
 							}
 						%>
 				</tbody>
 			</table>
-			<!-- 페이지 버튼 생성 -->
-			<div align="left">
 			<% 
 				if(pageNumber != 1){
 			%>
-				<a href="QNAboard.jsp?pageNumber=<%=pageNumber - 1 %>" class="btn btn-success btn-arrow-left">이전</a>
-			<%
-				}for(int i=0; i <10 ; i++){
-					if(userdao.endPage(pageNumber) < userdao.stratPage(pageNumber)+i){
-						break;
-					}
-			%>
-				<a href="QNAboard.jsp?pageNumber=<%=userdao.stratPage(pageNumber)+i%>" class="btn btn-outline-dark"><%=userdao.stratPage(pageNumber)+i %></a>
-			
+				<a href="scoreboard.jsp?pageNumber=<%=pageNumber - 1 %>" class="btn btn-success btn-arrow-left">이전</a>
 			<%
 				} if(userdao.nextPage(pageNumber+1)){
 			%>
-				<a href="QNAboard.jsp?pageNumber=<%=pageNumber + 1 %>" class="btn btn-success btn-arrow-left">다음</a>
+				<a href="scoreboard.jsp?pageNumber=<%=pageNumber + 1 %>" class="btn btn-success btn-arrow-left">다음</a>
 			<%
 				}
 			%>
@@ -216,13 +194,12 @@ https://templatemo.com/tm-559-zay-shop
 			<%
 				}
 			%>
-			</div>
+		</div>
 	</div>
-	</div>
-	
 	<!-- 게시판 메인 페이지 영역 끝 -->
 	
-
+</body>
+</html>
     <!-- End Section -->
 
     <!-- Start Script -->

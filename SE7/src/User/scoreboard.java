@@ -1,16 +1,17 @@
-package beans;
+package User;
 
-public class qboard {
-	private int Qnumber;
+public class scoreboard {
+	private int Enumber;
 	private String Title;
 	private String Content;
+	private int Star;
 	private String UserID;
 	
-	public int getQnumber() {
-		return Qnumber;
+	public int getEnumber() {
+		return Enumber;
 	}
-	public void setQnumber(int qnumber) {
-		Qnumber = qnumber;
+	public void setEnumber(int enumber) {
+		Enumber = enumber;
 	}
 	public String getTitle() {
 		return Title;
@@ -24,12 +25,18 @@ public class qboard {
 	public void setContent(String content) {
 		Content = content;
 	}
+	public int getStar() {
+		return Star;
+	}
+	public void setStar(int star) {
+		Star = star;
+	}
 	public String getUserID() {
 		return UserID;
 	}
+	
 	public void setUserID(String userID) {
 		UserID = userID;
 	}
-	
 	
 }

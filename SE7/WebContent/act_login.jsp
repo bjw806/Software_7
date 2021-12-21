@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="java.io.PrintWriter"%>
-<%@page import="dao.DAO"%>
-<%@page import="beans.*"%>
+<%@page import="User.UserDAO"%>
+<%@page import="User.User"%>
 <% request.setCharacterEncoding("utf-8"); %>
 <!DOCTYPE html>
 <html>
@@ -14,9 +14,7 @@
 <%
 	String userID= request.getParameter("userid");
 	String userPW= request.getParameter("pw");
-
-	DAO dao = new DAO();
-	dao.connect();
+	UserDAO dao = new UserDAO();
 	
 	//로그인이 되어있는 상태로 로그인 act_login 에 접근한 경우
 	String userid = null;
@@ -30,7 +28,6 @@
 		script.println("location.href='index.jsp'");
 		script.println("</script>");
 	}
-
 	// 로그인	
 	int result = dao.login(userID, userPW);
 	if(result == 1){
@@ -38,7 +35,6 @@
 		
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
-		script.println("alert('로그인 성공')");
 		script.println("location.href='index.jsp'");
 		script.println("</script>");
 	}else if(result == 0){

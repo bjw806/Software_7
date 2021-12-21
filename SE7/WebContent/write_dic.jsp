@@ -3,9 +3,6 @@
 <%@page import="java.io.PrintWriter"%>
 <%@page import="User.UserDAO"%>
 <%@page import="User.User"%>
-<%@ page import="java.util.Enumeration" %>
-<%@ page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
-<%@ page import="com.oreilly.servlet.MultipartRequest"%>
 
 <!DOCTYPE html>
 <html>
@@ -69,14 +66,24 @@
                             </div>
                         </div>
                     </div>
-                    <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal" data-bs-target="#templatemo_search">
-                        <i class="fa fa-fw fa-search text-dark mr-2"></i>
-                    </a>
-                    <a class="nav-icon position-relative text-decoration-none" href="#">
-                        <i class="fa fa-fw fa-user text-dark mr-3"></i>
-<!--                          <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">+99</span>
--->
-                    </a>
+                    <%  
+                   	    if (userid != null){
+					%>
+                    <a class="nav-icon position-relative text-decoration-none" href="option.jsp">
+                    	개인정보
+                        <i class="fa fa-fw fa-user text-dark mr-3"></i></a>
+                    <a class="nav-icon position-relative text-decoration-none" href="act_logout.jsp">
+                    	로그아웃
+                        <i class="fas fa-sign-out-alt text-dark mr-3"></i></a>
+                   <%
+                        } else if (userid == null){
+					%>
+                    <a class="nav-icon position-relative text-decoration-none" href="login.jsp">
+                    	로그인
+                        <i class="fa fa-fw fa-user text-dark mr-3"></i></a>
+                   <%
+                        }
+                   %>
                 </div>
             </div>
 
@@ -87,11 +94,11 @@
     <!-- Write -->
 	<div class="container">
 		<div class="row">
-			<form method="post" action="act_write.jsp" enctype="multipart/form-data">
+			<form method="post" action="act_dbwrite.jsp">
 				<table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
 					<thead>
 						<tr>
-							<th colspan="2" style="background-color: #eeeeee; text-align: center;">Q&A 질문</th>
+							<th colspan="2" style="background-color: #eeeeee; text-align: center;">백과사전 게시판</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -103,85 +110,12 @@
 						</tr>
 					</tbody>
 				</table>
-				
-				<input type="file" name="file" id="file" onchange="previewImage(this,'View_area')">
-				<div id='View_area' style='position:relative; width: 200px; height: 150px; color: black; border: 0px solid black; dispaly: inline; '></div>
-				
-				
 				<div  align="right">
 				<!-- 취소버튼 -->
 				<input type="button" class="btn btn-primary pull-left" OnClick="javascript:history.back(-1)" value="취소">
 				<!-- 글쓰기 버튼 생성 -->
 				<input type="submit" class="btn btn-primary pull-right" value="글쓰기">
 				</div>
-				
-				<!-- 이미지 미리보기 script -->
-				<script type="text/javascript">
-				function previewImage(targetObj, View_area) {
-					var preview = document.getElementById(View_area); //div id
-					var ua = window.navigator.userAgent;
-				  //ie일때(IE8 이하에서만 작동)
-					if (ua.indexOf("MSIE") > -1) {
-						targetObj.select();
-						try {
-							var src = document.selection.createRange().text; // get file full path(IE9, IE10에서 사용 불가)
-							var ie_preview_error = document.getElementById("ie_preview_error_" + View_area);
-							if (ie_preview_error) {
-								preview.removeChild(ie_preview_error); //error가 있으면 delete
-							}
-							var img = document.getElementById(View_area); //이미지가 뿌려질 곳
-							//이미지 로딩, sizingMethod는 div에 맞춰서 사이즈를 자동조절 하는 역할
-							img.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='"+src+"', sizingMethod='scale')";
-						} catch (e) {
-							if (!document.getElementById("ie_preview_error_" + View_area)) {
-								var info = document.createElement("<p>");
-								info.id = "ie_preview_error_" + View_area;
-								info.innerHTML = e.name;
-								preview.insertBefore(info, null);
-							}
-						}
-				  //ie가 아닐때(크롬, 사파리, FF)
-					} else {
-						var files = targetObj.files;
-						for ( var i = 0; i < files.length; i++) {
-							var file = files[i];
-							var imageType = /image.*/; //이미지 파일일경우만.. 뿌려준다.
-							if (!file.type.match(imageType))
-								continue;
-							var prevImg = document.getElementById("prev_" + View_area); //이전에 미리보기가 있다면 삭제
-							if (prevImg) {
-								preview.removeChild(prevImg);
-							}
-							var img = document.createElement("img"); 
-							img.id = "prev_" + View_area;
-							img.classList.add("obj");
-							img.file = file;
-							img.style.width = '200px'; 
-							img.style.height = '150px';
-							preview.appendChild(img);
-							if (window.FileReader) { // FireFox, Chrome, Opera 확인.
-								var reader = new FileReader();
-								reader.onloadend = (function(aImg) {
-									return function(e) {
-										aImg.src = e.target.result;
-									};
-								})(img);
-								reader.readAsDataURL(file);
-							} else { // safari is not supported FileReader
-								//alert('not supported FileReader');
-								if (!document.getElementById("sfr_preview_error_"
-										+ View_area)) {
-									var info = document.createElement("p");
-									info.id = "sfr_preview_error_" + View_area;
-									info.innerHTML = "not supported FileReader";
-									preview.insertBefore(info, null);
-								}
-							}
-						}
-					}
-				}
-				</script>
-				<!-- 미리보기 script 끝 -->
 			</form>
 		</div>
 	</div>

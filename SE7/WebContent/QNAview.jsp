@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="java.io.PrintWriter"%>
-<%@page import="dao.DAO"%>
-<%@page import="beans.qboard"%>
-<%@page import="beans.user"%>
-<%@page import="beans.ansboard"%>
+<%@page import="User.UserDAO"%>
+<%@page import="User.qboard"%>
+<%@page import="User.User"%>
+<%@page import="User.ansboard"%>
 <%@page import="java.io.File" %>
 <%@page import= "java.util.ArrayList" %>
 
@@ -35,10 +35,10 @@
   		function openCloseToc() {
    		 if(document.getElementById('toc-content').style.display === 'block') {
     		document.getElementById('toc-content').style.display = 'none';
-      		document.getElementById('toc-toggle').textContent = '질문글 열기';
+      		document.getElementById('toc-toggle').textContent = '답변글 열기';
    		 } else {
     		  document.getElementById('toc-content').style.display = 'block';
-     		 document.getElementById('toc-toggle').textContent = '질문글 닫기';
+     		 document.getElementById('toc-toggle').textContent = '답변글 닫기';
    		 }
   }
 	</script>
@@ -59,13 +59,12 @@
 			script.println("location.href='QNAboard.jsp'");
 			script.println("</script>");
 		}
-		DAO dao = new DAO();
-		dao.connect();
-		qboard qboard= dao.getQboard(Qnumber);
+		UserDAO userdao = new UserDAO(); 
+		qboard qboard= userdao.getQboard(Qnumber);
 		
 		String title = qboard.getTitle();
 		String content =qboard.getContent();
-		String nick = dao.getNick(qboard.getUserID());
+		String nick = userdao.getNick(qboard.getUserID());
 		
 	%>
  <!-- Header -->
@@ -126,7 +125,7 @@
                   	 }
                    %>
 
-                    </a>
+                   
                 </div>
             </div>
 
@@ -143,35 +142,35 @@
 				<table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
 					<thead>
 						<tr>
-							<th colspan="4" style="background-color: #eeeeee; text-align: center;">게시글</th>
+							<th colspan="5" style="background-color: #eeeeee; text-align: center;">게시글</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
 							<td colspan="1">제목</td>
-							<td colspan="3"><%=qboard.getTitle().replaceAll(" ","&nbsp;").replaceAll("<","&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
+							<td colspan="4"><%=qboard.getTitle().replaceAll(" ","&nbsp;").replaceAll("<","&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
 						</tr>
 						<tr>
-							<td>글작성자</td>
-							<td colspan="3"><%=dao.getNick(qboard.getUserID())%></td>
+							<td colspan="1">글작성자</td>
+							<td colspan="4"><%=userdao.getNick(qboard.getUserID())%></td>
 						</tr>
 						<tr>
 							<td colspan="1">내용</td>
-							<td colspan="2" style="min-height: 400px; text-align:left"><%=qboard.getContent().replaceAll(" ","&nbsp;").replaceAll("<","&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
+							<td colspan="3" style="min-height: 400px; text-align:left"><%=qboard.getContent().replaceAll(" ","&nbsp;").replaceAll("<","&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
 							<%
 								String directory =application.getRealPath("/upload/");
 								String files[] = new File(directory).list();
-								String filename=dao.getFileRealName(Qnumber);
+								String filename=userdao.getFileRealNameQ(Qnumber);
 								String img_scr ;
 								
 								
 								
 								for(int i = 0 ; i < files.length; i++){
-									filename=dao.getFileRealName(Qnumber);
+									filename=userdao.getFileRealNameQ(Qnumber);
 									
-									if(files[i].equals(dao.getFileRealName(Qnumber))){
+									if(files[i].equals(userdao.getFileRealNameQ(Qnumber))){
 										;
-										filename=dao.getFileRealName(Qnumber);
+										filename=userdao.getFileRealNameQ(Qnumber);
 							%>
 								<td colspan="1" ><img src="<%=request.getContextPath()%>/upload/<%=filename%>" width="300px" height="200px"></td>
 							<%
@@ -190,7 +189,7 @@
 		<!-- Q view -->
 		<%
 		////추가된 부분 22day 03:22
-			ArrayList<ansboard> ansboardList=dao.getAnsboard(Qnumber);
+			ArrayList<ansboard> ansboardList=userdao.getAnsboard(Qnumber);
 		%>
    <div id="toc-content">
     <div class="container">
@@ -212,7 +211,7 @@
 						</tr>
 						<tr>
 							<td>글작성자</td>
-							<td colspan="3"><%=dao.getNick(ansboardList.get(i).getUserID())%></td>
+							<td colspan="3"><%=userdao.getNick(ansboardList.get(i).getUserID())%></td>
 						</tr>
 						<tr>
 							<td colspan="1">내용</td>
@@ -236,14 +235,14 @@
 			<button type="button"  onclick="location.href='QNAboard.jsp';" class="btn btn-primary" style="width: 100px; hieght: 41px;">목록</button>
 			
 			<!-- 질문글 여닫기 추가된 부분 22day 03:22-->
-			<button type="button" id="toc-toggle" onclick="openCloseToc()" class="btn btn-primary" style="width: 100px; hieght: 41px; data-toggle="collapse" data-target="#qview">질문글 닫기</button>
+			<button type="button" id="toc-toggle" onclick="openCloseToc()" class="btn btn-primary" style="width: 100px; hieght: 41px; data-toggle="collapse" data-target="#qview">답변글 닫기</button>
 			<%
 				// 관리자(admin) 0 
-				if(dao.getRole(userid) == 0){
+				if(userdao.getRole(userid) == 0){
 			%>
 				<form action="AsnwerBoard.jsp" style="width: 100px; hieght: 48px;" method="post" accept-charset="UTF-8">
 					<input type="hidden" name="title" type="text" value="<%=title%>"/>
-					<input type="hidden" name="nick" value="<%=dao.getNick(qboard.getUserID())%>" type="text"/>
+					<input type="hidden" name="nick" value="<%=userdao.getNick(qboard.getUserID())%>" type="text"/>
 					<input type="hidden" name="content" value="<%=content%>" type="text"/>
 					<input type="hidden" name="Qnumber" value="<%=Qnumber%>" type="text"/>
 					<button type="submit"  class="btn btn-primary" style="width: 100px; hieght: 44px;">답변등록</button>

@@ -1,4 +1,4 @@
-package beans;
+package User;
 
 public class ansboard {
 	private int anumber;
@@ -27,8 +27,8 @@ public class ansboard {
 	public int getQnumber() {
 		return qnumber;
 	}
-	public void setQnumber(int qumber) {
-		this.qnumber = qumber;
+	public void setQnumber(int qnumber) {
+		this.qnumber = qnumber;
 	}
 	public String getUserID() {
 		return userID;

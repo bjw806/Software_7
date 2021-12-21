@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="java.io.PrintWriter"%>
 
 <!DOCTYPE html>
 <html>
@@ -14,21 +15,23 @@
     <form action="act_signup.jsp" method="post" class="singupForm">
       <h2>회원가입</h2>
       <div class="idForm">
-        <input type="text" id="userid" class="id" placeholder="ID">
+        <input type="text" name="userID" id="userID" class="id" placeholder="ID">
       </div>
       <div class="passForm">
-        <input type="password" id="pw" class="pw" placeholder="PW">
+        <input type="password" name="userPW" id="userPW" class="pw" placeholder="PW">
       </div>
       <div class="nicknameForm">
-        <input type="text" id="nickname" class="nickname" placeholder="nickname">
+        <input type="text" name="userNickname" id="userNickname" class="nickname" placeholder="nickname">
       </div>
+      <div>
       <button type="submit" class="btn">
-        sign up
+		회원가입
       </button>
-      
+      <button type="button" OnClick="javascript:history.back(-1)" class="btn">
+        	돌아가기
+      </button>
+      </div>
 
     </form>
   </body>
-		
-</body>
 </html>
