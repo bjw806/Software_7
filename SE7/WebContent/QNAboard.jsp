@@ -182,10 +182,19 @@
 				</tbody>
 			</table>
 			<!-- 글쓰기, 이전, 다음버튼 생성 -->
+			<div align="left">
 			<% 
 				if(pageNumber != 1){
 			%>
 				<a href="QNAboard.jsp?pageNumber=<%=pageNumber - 1 %>" class="btn btn-success btn-arrow-left">이전</a>
+			<%
+				}for(int i=0; i <10 ; i++){
+					if(dao.endPage(pageNumber) < dao.stratPage(pageNumber)+i){
+						break;
+					}
+			%>
+				<a href="QNAboard.jsp?pageNumber=<%=dao.stratPage(pageNumber)+i%>" class="btn btn-outline-dark"><%=dao.stratPage(pageNumber)+i %></a>
+			
 			<%
 				} if(dao.nextPage(pageNumber+1)){
 			%>
@@ -205,6 +214,7 @@
 			<%
 				}
 			%>
+			</div>
 		</div>
     </div>
    

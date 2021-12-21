@@ -1,5 +1,6 @@
 package dao;
-import beans.*;
+import beans.user;
+import beans.qboard;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -53,8 +54,31 @@ public class DAO {
 			return -1;
 		}catch(Exception e) {
 			e.printStackTrace();
-		}
+		} 
 		return -2;
+	}
+	
+	
+	//회원가입
+	public int join(user user) {
+		try {
+			String sql = "INSERT INTO User(UserID, PW, Nickname) VALUES (?, ?, ?);";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, user.getUserID());
+			ps.setString(2, user.getUserPW());
+			ps.setString(3, user.getUserNickname());
+			return ps.executeUpdate();
+		}	catch (Exception e) {
+			e.printStackTrace();
+		}	finally {
+			try {
+				ps.close();
+				con.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return -1;	// 에라
 	}
 	
 	// Q&A 게시판 글쓰기
@@ -91,7 +115,7 @@ public class DAO {
 			return rs.getNString(1);
 		} catch(Exception e) {
 			e.printStackTrace();
-		} return null; // 에러
+		}return null; // 에러
 	}
 	
 	// 현재 마지막 글번호 후 숫자를 리턴해줌.
@@ -109,6 +133,29 @@ public class DAO {
 		}return -1; //에러
 	}
 	
+	// 페이지목록 중 시작페이지(맨 앞 페이지)
+		public int stratPage(int pageNumber) {
+			return ((pageNumber -1 )/10) * 10 +1;
+		}
+	
+	// 페이지목록 중 마지막페이지
+		public int endPage(int pageNumber) {
+			String sql ="SELECT count(Qnumber) FROM qboard";
+			int totalPage;
+			try {
+				PreparedStatement ps=con.prepareStatement(sql);
+				rs = ps.executeQuery();
+				if(rs.next()) {
+					totalPage= rs.getInt(1);
+				} else {
+					return -2; // rs.next 반환값 없음
+				}
+				return (totalPage-1) /10 +1;
+			} catch(Exception e) {
+				e.printStackTrace();
+			}return -1; // 에러발생
+		}
+	
 	// 다음페이지가 있는지 확인하는 함수
 	// 있으면 true
 	// 없으면 false
@@ -123,8 +170,7 @@ public class DAO {
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
-		}
-		return false;
+		}return false;
 	}
 	
 	// Q&A게시판 DB정보를 가져오는 함수
@@ -172,7 +218,8 @@ public class DAO {
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
-		}
-		return null;
+		} return null;
 	}
+	
+	
 }
