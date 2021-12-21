@@ -142,6 +142,8 @@ public class UserDAO {
 		}
 		public int writesboard(String Title, String Content, String Star,String UserID) {
 			String sql = "INSERT INTO estiboard(title, content, Star, userid) values(?,?,?,?)";
+			System.out.println(Star);
+			System.out.println(Integer.parseInt(Star));
 			try {
 				PreparedStatement ps= conn.prepareStatement(sql);
 				
@@ -299,6 +301,9 @@ public class UserDAO {
 			return null;
 		}
 		
+		// 작성자(userid)가 쓴 가장 최신의 글 번호 가져옴
+		// 이미지 파일 동기화 할 때 사용
+		// qpicture db 사용
 		public int getQnumber(String UserID) {
 			String sql= "SELECT MAX(Qnumber) FROM qboard WHERE UserID=?";
 			try {
@@ -311,6 +316,34 @@ public class UserDAO {
 				e.printStackTrace();
 			} return -1; // 에러
 		}
+		
+		// estipicture db 동기화
+		public int getEnumber(String UserID) {
+			String sql= "SELECT MAX(Enumber) FROM estiboard WHERE UserID=?";
+			try {
+				PreparedStatement ps= conn.prepareStatement(sql);
+				ps.setString(1, UserID);
+				rs= ps.executeQuery();
+				rs.next();
+				return rs.getInt(1);
+			} catch(Exception e) {
+				e.printStackTrace();
+			} return -1; // 에러
+		}
+		
+		// dicpicture db 동기화
+				public int getDnumber(String UserID) {
+					String sql= "SELECT MAX(Dnumber) FROM dicboard WHERE UserID=?";
+					try {
+						PreparedStatement ps= conn.prepareStatement(sql);
+						ps.setString(1, UserID);
+						rs= ps.executeQuery();
+						rs.next();
+						return rs.getInt(1);
+					} catch(Exception e) {
+						e.printStackTrace();
+					} return -1; // 에러
+				}
 		
 		// Q picture -> fileRealName
 		// 평가게시판의 파일 진짜 이름 가져오기
@@ -344,11 +377,11 @@ public class UserDAO {
 		
 		// estipicture -> fileRealName
 		// 평가게시판의 파일 진짜 이름 가져오기
-		public String getFileRealNameE(int Inumber) {
+		public String getFileRealNameE(int Enumber) {
 			String sql = "SELECT fileRealName FROM estipicture WHERE Enumber=?";
 			try {
 				PreparedStatement ps= conn.prepareStatement(sql);
-				ps.setInt(1, Inumber);
+				ps.setInt(1, Enumber);
 				rs= ps.executeQuery();
 				rs.next();
 				return rs.getString(1);

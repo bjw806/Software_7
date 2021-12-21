@@ -145,7 +145,7 @@ https://templatemo.com/tm-559-zay-shop
     </section>
     <!-- Close Banner -->
 	<form action="searchs.jsp">
-	<div align="right">
+	<div class="col-lg-6 px-2" align="right">
 		<select id="searchoption" name="searchoption">
 			<option value="Title">제목에서</option>
 			<option value="UserID">작성자에서</option>

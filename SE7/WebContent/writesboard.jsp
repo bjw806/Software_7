@@ -94,7 +94,7 @@
     <!-- Write -->
 	<div class="container">
 		<div class="row">
-			<form method="post" action="act_sbwrite.jsp">
+			<form method="post" action="act_sbwrite.jsp" enctype="multipart/form-data">
 				<table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
 					<thead>
 						<tr>
