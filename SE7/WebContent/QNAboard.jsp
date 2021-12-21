@@ -167,12 +167,15 @@
 					
 						<% 
 							ArrayList<qboard> qboardList = dao.getQboardList(pageNumber);
+							
 							for(int i = 0; i < qboardList.size() ;i++)
-							{
+							{ 
+								
 						%>
 						<tr>
 						<td><%=qboardList.get(i).getQnumber()%></td>
 						<td><a href="QNAview.jsp?Qnumber=<%=qboardList.get(i).getQnumber()%>"><%=qboardList.get(i).getTitle().replaceAll(" ","&nbsp;").replaceAll("<","&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></td>
+
 						<td><%=dao.getNick(qboardList.get(i).getUserID())%></td>
 						</tr>
 						<%
