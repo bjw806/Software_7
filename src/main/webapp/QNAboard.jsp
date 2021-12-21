@@ -94,7 +94,7 @@
                             </div>
                         </div>
                     </div>
-                    <a class="nav-icon d-none d-lg-inline"  href="search.jsp" data-bs-toggle="modal" data-bs-target="#templatemo_search">
+                    <a class="nav-icon d-none d-lg-inline"  href="#" data-bs-toggle="modal" data-bs-target="#templatemo_search">
                         <i class="fa fa-fw fa-search text-dark mr-2"></i>
                     </a>
                     <a class="nav-icon position-relative text-decoration-none" href="login.jsp">
@@ -108,16 +108,7 @@
         </div>
     </nav>
     <!-- Close Header -->
-	<form action="searchd.jsp">
-	<div align="right">
-		<select id="searchoption" name="searchoption">
-			<option value="Title">제목에서</option>
-			<option value="UserID">작성자에서</option>
-		</select>
-		<input type="text" id="searchtext" name="searchtext" size=10>
-		<input type="submit" class="btn btn-primary pull-right" value="검색">
-	</div>
-	</form>
+	
 	<!-- Start Banner -->
     <section class="container">
         <div class="container">
@@ -125,7 +116,6 @@
                 <div class="col-md-8">
                     <h1>Q&A게시판</h1>
                     <p>
-                      	설명 필요없으면 삭제
                     </p>
                 </div>
                 <div class="col-md-4">
@@ -152,7 +142,6 @@
             </form>
         </div>
     </div>
-
 	<form action="searchq.jsp">
 	<div align="right">
 		<select id="searchoption" name="searchoption">
@@ -163,7 +152,6 @@
 		<input type="submit" class="btn btn-primary pull-right" value="검색">
 	</div>
 	</form>
-
     <!-- Start Content -->
     <div class="container py-5">
         <div class="row">
@@ -193,10 +181,19 @@
 				</tbody>
 			</table>
 			<!-- 글쓰기, 이전, 다음버튼 생성 -->
+			<div align="left">
 			<% 
 				if(pageNumber != 1){
 			%>
 				<a href="QNAboard.jsp?pageNumber=<%=pageNumber - 1 %>" class="btn btn-success btn-arrow-left">이전</a>
+			<%
+				}for(int i=0; i <10 ; i++){
+					if(userdao.endPage(pageNumber) < userdao.stratPage(pageNumber)+i){
+						break;
+					}
+			%>
+				<a href="QNAboard.jsp?pageNumber=<%=userdao.stratPage(pageNumber)+i%>" class="btn btn-outline-dark"><%=userdao.stratPage(pageNumber)+i %></a>
+			
 			<%
 				} if(userdao.nextPage(pageNumber+1)){
 			%>
@@ -216,6 +213,7 @@
 			<%
 				}
 			%>
+			</div>
 		</div>
     </div>
    

@@ -70,6 +70,23 @@ public class UserDAO {
 			} return -1;
 		}
 		
+		public int AsnwerWrite(String Title, String Content,String UserID , int Qnumber) {
+			String sql = "INSERT INTO ansBOARD(title, content, userid ,Qnumber) values(?,?,?,?)";
+			try {
+				PreparedStatement ps= conn.prepareStatement(sql);
+					
+				ps.setNString(1, Title);
+				ps.setNString(2, Content);
+				ps.setNString(3, UserID);
+				ps.setInt(4, Qnumber);
+				
+				return ps.executeUpdate();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}return -1;
+				
+		}
+		
 		// 아이디에 따른 닉네임을 출력해주는 함수
 		// UserID를 parameter로 가짐
 		
@@ -86,6 +103,27 @@ public class UserDAO {
 			} catch(Exception e) {
 				e.printStackTrace();
 			} return null; // 에러
+		}
+		
+		public int stratPage(int pageNumber) {
+			return ((pageNumber -1 )/10) * 10 +1;
+		}
+		
+		public int endPage(int pageNumber) {
+			String sql ="SELECT count(Qnumber) FROM qboard";
+			int totalPage;
+			try {
+				PreparedStatement ps=conn.prepareStatement(sql);
+				rs = ps.executeQuery();
+				if(rs.next()) {
+					totalPage= rs.getInt(1);
+				} else {
+					return -2; // rs.next 반환값 없음
+				}
+				return (totalPage-1) /10 +1;
+			} catch(Exception e) {
+				e.printStackTrace();
+			}return -1; // 에러발생
 		}
 		
 		public int getStar(String UserID) {
@@ -178,6 +216,24 @@ public class UserDAO {
 			} return -1; //에러
 		}
 		
+		public int getRole(String UserID) {
+			String sql = "SELECT role FROM user WHERE UserID=?";
+			
+			try {
+				PreparedStatement ps= conn.prepareStatement(sql);
+				ps.setString(1, UserID);
+				rs = ps.executeQuery();
+				
+				if(rs.next()) {
+					return rs.getInt(1);
+				}
+				
+				
+			}catch (Exception e) {
+				e.printStackTrace();
+			}return -1;
+		}
+		
 		// 다음페이지가 있는지 확인하는 함수
 		// 있으면 true
 		// 없으면 false
@@ -241,6 +297,46 @@ public class UserDAO {
 				e.printStackTrace();
 			} 
 			return null;
+		}
+		
+		public int getQnumber(String UserID) {
+			String sql= "SELECT MAX(Qnumber) FROM qboard WHERE UserID=?";
+			try {
+				PreparedStatement ps= conn.prepareStatement(sql);
+				ps.setString(1, UserID);
+				rs= ps.executeQuery();
+				rs.next();
+				return rs.getInt(1);
+			} catch(Exception e) {
+				e.printStackTrace();
+			} return -1; // 에러
+		}
+		
+		public String getFileRealNameE(int Inumber) {
+			String sql = "SELECT Picture FROM estipicture WHERE Inumber=?";
+			try {
+				PreparedStatement ps= conn.prepareStatement(sql);
+				ps.setInt(1, Inumber);
+				rs= ps.executeQuery();
+				rs.next();
+				return rs.getString(1);
+			} catch (Exception e) {
+				e.printStackTrace();
+			} return null;
+		}
+		
+		public int uploadQNA(int Enumber, String fileName , String fileRealName) {
+			String sql = "INSERT INTO estipicture(Enumber,fileName,fileRealName) VALUES (?,?,?)";
+			try {
+				PreparedStatement ps= conn.prepareStatement(sql);
+				ps.setInt(1, Enumber);
+				ps.setString(2,fileName);
+				ps.setString(3, fileRealName);
+				
+				return ps.executeUpdate();
+			} catch(Exception e) {
+				e.printStackTrace();
+			} return -1; // 에러
 		}
 		
 		// --------------------------------------------------------
