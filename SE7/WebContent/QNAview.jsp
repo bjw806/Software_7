@@ -4,7 +4,9 @@
 <%@page import="dao.DAO"%>
 <%@page import="beans.qboard"%>
 <%@page import="beans.user"%>
+<%@page import="beans.ansboard"%>
 <%@page import="java.io.File" %>
+<%@page import= "java.util.ArrayList" %>
 
 <!DOCTYPE html>
 <html>
@@ -28,6 +30,18 @@
 	
 </head>
 <body>
+	<script>
+	//추가된 부분 22day 03:22
+  		function openCloseToc() {
+   		 if(document.getElementById('toc-content').style.display === 'block') {
+    		document.getElementById('toc-content').style.display = 'none';
+      		document.getElementById('toc-toggle').textContent = '질문글 열기';
+   		 } else {
+    		  document.getElementById('toc-content').style.display = 'block';
+     		 document.getElementById('toc-toggle').textContent = '질문글 닫기';
+   		 }
+  }
+	</script>
 	<%
 		String userid = null;
 		if(session.getAttribute("userid") != null){
@@ -51,6 +65,7 @@
 		
 		String title = qboard.getTitle();
 		String content =qboard.getContent();
+		String nick = dao.getNick(qboard.getUserID());
 		
 	%>
  <!-- Header -->
@@ -119,34 +134,31 @@
     </nav>
     <!-- Close Header -->
     
-    <!-- Write -->
+    
+    <!-- Q view 추가된 부분 22day 03:22-->
+    
 	<div class="container">
 		<div class="row">
 			
 				<table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
 					<thead>
 						<tr>
-							<th colspan="3" style="background-color: #eeeeee; text-align: center;">게시글</th>
+							<th colspan="4" style="background-color: #eeeeee; text-align: center;">게시글</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
-							<td style="width: 20%;">제목</td>
-							<td colspan="2"><%=qboard.getTitle().replaceAll(" ","&nbsp;").replaceAll("<","&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
+							<td colspan="1">제목</td>
+							<td colspan="3"><%=qboard.getTitle().replaceAll(" ","&nbsp;").replaceAll("<","&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
 						</tr>
 						<tr>
 							<td>글작성자</td>
-							<td colspan="2"><%=dao.getNick(qboard.getUserID())%></td>
+							<td colspan="3"><%=dao.getNick(qboard.getUserID())%></td>
 						</tr>
 						<tr>
-							<td>내용</td>
-							<td colspan="2" style="min-height: 200px; text-align:left"><%=qboard.getContent().replaceAll(" ","&nbsp;").replaceAll("<","&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
-						</tr>
-						
-						
-					</tbody>
-				</table>
-				<%
+							<td colspan="1">내용</td>
+							<td colspan="2" style="min-height: 400px; text-align:left"><%=qboard.getContent().replaceAll(" ","&nbsp;").replaceAll("<","&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
+							<%
 								String directory =application.getRealPath("/upload/");
 								String files[] = new File(directory).list();
 								String filename=dao.getFileRealName(Qnumber);
@@ -161,14 +173,70 @@
 										;
 										filename=dao.getFileRealName(Qnumber);
 							%>
-								<a><img src="<%=request.getContextPath()%>/upload/<%=filename%>" width="400px" height="300px"></a>
+								<td colspan="1" ><img src="<%=request.getContextPath()%>/upload/<%=filename%>" width="300px" height="200px"></td>
 							<%
 									}
 								}
 							%>
+						</tr>
+						
+						
+						
+					</tbody>
+				</table>
+				
 		</div>
-		<div class="row" align="right" style="float: right;">
-			<a href="QNAboard.jsp"  class="btn btn-primary" style="width: 100px; hieght: 41px;">목록</a>
+		
+		<!-- Q view -->
+		<%
+		////추가된 부분 22day 03:22
+			ArrayList<ansboard> ansboardList=dao.getAnsboard(Qnumber);
+		%>
+   <div id="toc-content">
+    <div class="container">
+		<div class="row">
+				<table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
+					<thead>
+						<tr>
+							<th colspan="4" style="background-color: #eeeeee; text-align: center;">답변글</th>
+						</tr>
+					</thead>
+					<%
+						for(int i=0; i < ansboardList.size() ; i++){
+					%>
+					
+					<tbody>
+						<tr>
+							<td colspan="1">제목</td>
+							<td colspan="3"><%=ansboardList.get(i).getTitle().replaceAll(" ","&nbsp;").replaceAll("<","&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
+						</tr>
+						<tr>
+							<td>글작성자</td>
+							<td colspan="3"><%=dao.getNick(ansboardList.get(i).getUserID())%></td>
+						</tr>
+						<tr>
+							<td colspan="1">내용</td>
+							<td colspan="3" style="min-height: 400px; text-align:left"><%=ansboardList.get(i).getContent().replaceAll(" ","&nbsp;").replaceAll("<","&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
+						</tr>
+						
+						<%
+							} // 여기까지 추가됨 colspan 값 확인해주세요 안그러면 그림 밖으로 나갑니다!
+						%>
+						
+						
+					</tbody>
+				</table>
+			
+		</div>
+	</div>
+	
+</div>
+    <!-- Close A view -->
+		<div class="btn-group-sm" align="right" style="float: right;">
+			<button type="button"  onclick="location.href='QNAboard.jsp';" class="btn btn-primary" style="width: 100px; hieght: 41px;">목록</button>
+			
+			<!-- 질문글 여닫기 추가된 부분 22day 03:22-->
+			<button type="button" id="toc-toggle" onclick="openCloseToc()" class="btn btn-primary" style="width: 100px; hieght: 41px; data-toggle="collapse" data-target="#qview">질문글 닫기</button>
 			<%
 				// 관리자(admin) 0 
 				if(dao.getRole(userid) == 0){

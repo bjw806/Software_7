@@ -1,6 +1,7 @@
 package dao;
 import beans.user;
 import beans.qboard;
+import beans.ansboard;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -137,6 +138,8 @@ public class DAO {
 			e.printStackTrace();
 		}return null; // 에러
 	}
+	
+	
 	
 	// 현재 마지막 글번호 후 숫자를 리턴해줌.
 	public int getNext() {
@@ -312,6 +315,32 @@ public class DAO {
 		}return -1;
 	}
 	
+	// #추가분 12 -22 2시 30분
+	// 답변 게시판 DB 정보 가져오기
+	public ArrayList<ansboard> getAnsboard(int Qnumber) {
+		String sql ="SELECT * FROM ansboard WHERE Qnumber = ?";
+		ArrayList<ansboard> ansboardList = new ArrayList<ansboard>();
+	try {
+		PreparedStatement ps= con.prepareStatement(sql);
+		ps.setInt(1, Qnumber);
+		rs = ps.executeQuery();
 		
+		while(rs.next()) {
+			ansboard ansboard = new ansboard();
+			ansboard.setAnumber(rs.getInt(1));
+			ansboard.setTitle(rs.getNString(2));
+			ansboard.setContent(rs.getNString(3));
+			ansboard.setQnumber(rs.getInt(4));
+			ansboard.setUserID(rs.getNString(5));
+			
+			ansboardList.add(ansboard);
+		}
+		
+		
+	}catch (Exception e) {
+		e.printStackTrace();
+	}
+	return ansboardList;
 	
+	}
 }
