@@ -144,19 +144,22 @@ https://templatemo.com/tm-559-zay-shop
         </div>
     </section>
     <!-- Close Banner -->
-	<form action="searchs.jsp">
-	<div class="col-lg-6 px-2" align="right">
-		<select id="searchoption" name="searchoption">
-			<option value="Title">제목에서</option>
-			<option value="UserID">작성자에서</option>
-		</select>
-		<input type="text" id="searchtext" name="searchtext" size=10>
-		<input type="submit" class="btn btn-primary pull-right" value="검색">
-	</div>
-	</form>
+	
    <!-- 게시판 메인 페이지 영역 시작 -->
 	<div class="container">
 		<div class="row">
+		<!-- Search -->
+			<form action="searchs.jsp">
+				<div class="col-lg-6 px-2" align="right">
+					<select id="searchoption" name="searchoption">
+						<option value="Title">제목에서</option>
+						<option value="UserID">작성자에서</option>
+					</select>
+				<input type="text" id="searchtext" name="searchtext" size=10>
+				<input type="submit" class="btn btn-primary pull-right" value="검색">
+				</div>
+			</form>
+		<!-- Search -->
 			<table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
 				<thead>
 					<tr>
@@ -188,19 +191,19 @@ https://templatemo.com/tm-559-zay-shop
 			<% 
 				if(pageNumber != 1){
 			%>
-				<a href="QNAboard.jsp?pageNumber=<%=pageNumber - 1 %>" class="btn btn-success btn-arrow-left">이전</a>
+				<a href="scoreboard.jsp?pageNumber=<%=pageNumber - 1 %>" class="btn btn-success btn-arrow-left">이전</a>
 			<%
 				}for(int i=0; i <10 ; i++){
-					if(userdao.endPage(pageNumber) < userdao.stratPage(pageNumber)+i){
+					if(userdao.endScorePage(pageNumber) < userdao.stratPage(pageNumber)+i){
 						break;
 					}
 			%>
-				<a href="QNAboard.jsp?pageNumber=<%=userdao.stratPage(pageNumber)+i%>" class="btn btn-outline-dark"><%=userdao.stratPage(pageNumber)+i %></a>
+				<a href="scoreboard.jsp?pageNumber=<%=userdao.stratPage(pageNumber)+i%>" class="btn btn-outline-dark"><%=userdao.stratPage(pageNumber)+i %></a>
 			
 			<%
 				} if(userdao.nextPage(pageNumber+1)){
 			%>
-				<a href="QNAboard.jsp?pageNumber=<%=pageNumber + 1 %>" class="btn btn-success btn-arrow-left">다음</a>
+				<a href="scoreboard.jsp?pageNumber=<%=pageNumber + 1 %>" class="btn btn-success btn-arrow-left">다음</a>
 			<%
 				}
 			%>

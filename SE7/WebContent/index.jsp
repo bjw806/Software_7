@@ -6,6 +6,7 @@
 <%@page import="User.User"%>
 <%@page import="java.io.File" %>
 <%@page import="java.util.ArrayList" %>
+<%@page import= "java.util.List" %>
 <%@page import="java.io.PrintWriter"%>
 <!DOCTYPE html>
 <html>
@@ -68,7 +69,7 @@
                 <div class="flex-fill">
                     <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="index.jsp">분리수거</a>
+                            <a class="nav-link" href="dicboard.jsp">분리수거</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="scoreboard.jsp">재활용평가</a>
@@ -229,6 +230,7 @@
 						
 						// dicboard는 이미지파일을 가지고 있는지 에대한 bool
 						boolean bool=false;
+						List<Integer> alreadyPrinted = new ArrayList<Integer>();
 						
 						
 						// i 번째 Dicboard가 가지고 있는 이미지 파일을 검색
@@ -242,27 +244,37 @@
 								filename=userdao.getFileRealNameD(dBoardList.get(i).getDnumber());
 								// if문이 true면 i번째 dicboard 는 j번째 dicpicture에 있는 사진을 소유
 								// bool: false -> ture
+								alreadyPrinted.add(dBoardList.get(i).getDnumber());
 								bool = true;
+								
 					
         	%>
-        	<div class="col-4 col-md-3 p-4 mt-2">
-                <a href="#"><img src="<%=request.getContextPath()%>/upload/<%=filename%>" class="rounded-circle img-fluid border"></a>
+        	<div style="width: 270px; height: 237px " class="col-4 col-md-3 p-4 mt-2">
+                <a href="dicview.jsp?Dnumber=<%=dBoardList.get(i).getDnumber()%>"><img src="<%=request.getContextPath()%>/upload/<%=filename%>" style="width: 270px; height: 237px" class="rounded-circle img-fluid border"></a>
                 <h5 class="text-center mt-3 mb-3"><%=dBoardList.get(i).getTitle()%></h5>
             </div>
             <%
         				}
-        			} if(!bool){
+        			} if(!bool && !alreadyPrinted.contains(dBoardList.get(i).getDnumber()) && !dBoardList.isEmpty()){
         	%>
-        			<div class="col-4 col-md-3 p-4 mt-2">
-               			<a href="#"><img src="./assets/img/default.jpg" class="rounded-circle img-fluid border"></a>
+        			<div style="width: 270px; height: 237px " class="col-4 col-md-3 p-4 mt-2">
+               			<a href="dicview.jsp?Dnumber=<%=dBoardList.get(i).getDnumber()%>"><img src="./assets/img/default.jpg" style="width: 270px; height: 237px" class="rounded-circle img-fluid border"></a>
                 		<h5 class="text-center mt-3 mb-3"><%=dBoardList.get(i).getTitle()%></h5>
            			</div>
         	
         	<%		
-        			}
+        			} 
+        	%>
+        			
+        	<%
+        			
         		}
         	}
             %>	
+            <div class="col-4 col-md-3 p-4 mt-2">
+               			<a href="#"><img src="./assets/img/waiting.gif"></a>
+                		<h5 class="서비스 준비중"></h5>
+           			</div>
         </div>
     </section>
     <!-- End Categories of recycling-info -->

@@ -109,8 +109,46 @@ public class UserDAO {
 			return ((pageNumber -1 )/10) * 10 +1;
 		}
 		
-		public int endPage(int pageNumber) {
+		// 페이지를 위해서 동작하는 함수
+		// QNA게시판의 총 페이지 수를 반환
+		public int endQNAPage(int pageNumber) {
 			String sql ="SELECT count(Qnumber) FROM qboard";
+			int totalPage;
+			try {
+				PreparedStatement ps=conn.prepareStatement(sql);
+				rs = ps.executeQuery();
+				if(rs.next()) {
+					totalPage= rs.getInt(1);
+				} else {
+					return -2; // rs.next 반환값 없음
+				}
+				return (totalPage-1) /10 +1;
+			} catch(Exception e) {
+				e.printStackTrace();
+			}return -1; // 에러발생
+		}
+		
+		// 스코어게시판의 총 페이지 수를 반환
+				public int endScorePage(int pageNumber) {
+					String sql ="SELECT count(enumber) FROM estiboard";
+					int totalPage;
+					try {
+						PreparedStatement ps=conn.prepareStatement(sql);
+						rs = ps.executeQuery();
+						if(rs.next()) {
+							totalPage= rs.getInt(1);
+						} else {
+							return -2; // rs.next 반환값 없음
+						}
+						return (totalPage-1) /10 +1;
+					} catch(Exception e) {
+						e.printStackTrace();
+					}return -1; // 에러발생
+				}
+				
+		// 백과사전게시판의 총 페이지 수를 반환
+		public int endDicPage(int pageNumber) {
+			String sql ="SELECT count(Dnumber) FROM dicboard";
 			int totalPage;
 			try {
 				PreparedStatement ps=conn.prepareStatement(sql);
@@ -218,6 +256,8 @@ public class UserDAO {
 			} return -1; //에러
 		}
 		
+		
+		// 1관리자 나머지 유저 및 비회원
 		public int getRole(String UserID) {
 			String sql = "SELECT role FROM user WHERE UserID=?";
 			
@@ -257,7 +297,7 @@ public class UserDAO {
 		// 전체 백과사전 DB를 가져오는 함수
 		public ArrayList<dicboard> getTotalDicboardList(){
 			ArrayList<dicboard> dicboardList = new ArrayList<dicboard>();
-			String sql = "SELECT * FROM qboard";
+			String sql = "SELECT * FROM dicboard";
 			
 			try {
 				PreparedStatement ps= conn.prepareStatement(sql);

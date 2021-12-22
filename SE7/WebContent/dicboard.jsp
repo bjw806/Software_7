@@ -4,12 +4,13 @@
 <%@page import="User.UserDAO"%>
 <%@page import="User.qboard"%>
 <%@page import="User.User"%>
+<%@page import="User.dicboard" %>
 <%@page import="java.util.ArrayList" %>
 <%@page import="java.io.PrintWriter"%>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Q&A게시판</title>
+    <title>백과사전</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -124,7 +125,7 @@
         <div class="container">
             <div class="row align-items-center py-5">
                 <div class="col-md-8">
-                    <h1>Q&A게시판</h1>
+                    <h1>백과사전게시판</h1>
                     <p>
                     </p>
                 </div>
@@ -157,8 +158,8 @@
     <div class="container py-5">
         <div class="row">
         <!-- Search -->
-        	<form action="searchq.jsp">
-				<div class="col-12 col-md-12" align="right">
+        	<form action="searchd.jsp">
+				<div align="right">
 					<select id="searchoption" name="searchoption">
 						<option value="Title">제목에서</option>
 						<option value="UserID">작성자에서</option>
@@ -167,7 +168,7 @@
 				<input type="submit" class="btn btn-primary pull-right" value="검색">
 				</div>
 			</form>
-		<!-- Search -->
+		<!-- End Search -->
 			<table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
 				<thead>
 					<tr>
@@ -178,14 +179,14 @@
 				</thead>
 				<tbody>
 						<% 
-							ArrayList<qboard> qboardList = userdao.getQboardList(pageNumber);
-							for(int i = 0; i < qboardList.size() ;i++)
+							ArrayList<dicboard> dicboardList = userdao.getDboardList(pageNumber);
+							for(int i = 0; i < dicboardList.size() ;i++)
 							{
 						%>
 						<tr>
-						<td><%=qboardList.get(i).getQnumber()%></td>
-						<td><a href="QNAview.jsp?Qnumber=<%=qboardList.get(i).getQnumber()%>"><%=qboardList.get(i).getTitle().replaceAll(" ","&nbsp;").replaceAll("<","&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></td>
-						<td><%=userdao.getNick(qboardList.get(i).getUserID())%></td>
+						<td><%=dicboardList.get(i).getDnumber()%></td>
+						<td><a href="dicview.jsp?Dnumber=<%=dicboardList.get(i).getDnumber()%>"><%=dicboardList.get(i).getTitle().replaceAll(" ","&nbsp;").replaceAll("<","&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></td>
+						<td><%=userdao.getNick(dicboardList.get(i).getUserID())%></td>
 						</tr>
 						<%
 							}
@@ -198,34 +199,32 @@
 			<% 
 				if(pageNumber != 1){
 			%>
-				<a href="QNAboard.jsp?pageNumber=<%=pageNumber - 1 %>" class="btn btn-success btn-arrow-left">이전</a>
+				<a href="dicboard.jsp?pageNumber=<%=pageNumber - 1 %>" class="btn btn-success btn-arrow-left">이전</a>
 			<%
 				}for(int i=0; i <10 ; i++){
-					if(userdao.endQNAPage(pageNumber) < userdao.stratPage(pageNumber)+i){
+					if(userdao.endDicPage(pageNumber) < userdao.stratPage(pageNumber)+i){
 						break;
 					}
 			%>
-				<a href="QNAboard.jsp?pageNumber=<%=userdao.stratPage(pageNumber)+i%>" class="btn btn-outline-dark"><%=userdao.stratPage(pageNumber)+i %></a>
+				<a href="dicboard.jsp?pageNumber=<%=userdao.stratPage(pageNumber)+i%>" class="btn btn-outline-dark"><%=userdao.stratPage(pageNumber)+i %></a>
 			
 			<%
 				} if(userdao.nextPage(pageNumber+1)){
 			%>
-				<a href="QNAboard.jsp?pageNumber=<%=pageNumber + 1 %>" class="btn btn-success btn-arrow-left">다음</a>
+				<a href="dicoard.jsp?pageNumber=<%=pageNumber + 1 %>" class="btn btn-success btn-arrow-left">다음</a>
 			<%
 				}
 			%>
-			<%
+			<%	
 				
-				if(userid !=null){
+				// 1 관리자
+				if(userdao.getRole(userid) == 1){
 			%>
-			<a href="write.jsp" class="btn btn-primary pull-right">글쓰기</a>
-			<%
-				}else if(userid == null){
-			%>
-			<a href="login.jsp" class="btn btn-primary pull-right" onclick="alert('로그인을 하세요')">글쓰기</a>
+			<a href="write_dic.jsp" class="btn btn-primary pull-right">글쓰기</a>
 			<%
 				}
 			%>
+			
 			</div>
 		</div>
     </div>

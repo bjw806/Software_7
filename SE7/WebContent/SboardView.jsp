@@ -115,17 +115,17 @@
 					</thead>
 					<tbody>
 						<tr>
-							<td colspan="1">제목</td>
+							<td colspan="1" style="text-align:left">제목</td>
 							<td colspan="4"><%=scoreboard.getTitle().replaceAll(" ","&nbsp;").replaceAll("<","&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
 						</tr>
 						<tr>
-							<td colspan="1">글작성자</td>
+							<td colspan="1" style="text-align:left">작성자</td>
 							<td colspan="2"><%=userdao.getNick(scoreboard.getUserID())%></td>
 							<td colspan="2">별점&nbsp;&nbsp;<%=userdao.outStar(userdao.getStar(scoreboard.getUserID()))%></td>
 						</tr>
 						
 						<tr>
-							<td colspan="1">내용</td>
+							<td colspan="1" style="text-align:left">내용</td>
 							<td colspan="3" style="min-height: 400px; text-align:left"><%=scoreboard.getContent().replaceAll(" ","&nbsp;").replaceAll("<","&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
 							<%
 								String directory =application.getRealPath("/upload/");

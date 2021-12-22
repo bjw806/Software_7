@@ -7,7 +7,7 @@
 <%@page import="User.ansboard"%>
 <%@page import="java.io.File" %>
 <%@page import= "java.util.ArrayList" %>
-
+<% request.setCharacterEncoding("UTF-8"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -147,15 +147,15 @@
 					</thead>
 					<tbody>
 						<tr>
-							<td colspan="1">제목</td>
-							<td colspan="4"><%=qboard.getTitle().replaceAll(" ","&nbsp;").replaceAll("<","&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
+							<td colspan="2" style="text-align:left">제목</td>
+							<td colspan="3"><%=qboard.getTitle().replaceAll(" ","&nbsp;").replaceAll("<","&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
 						</tr>
 						<tr>
-							<td colspan="1">글작성자</td>
-							<td colspan="4"><%=userdao.getNick(qboard.getUserID())%></td>
+							<td colspan="2" style="text-align:left">글작성자</td>
+							<td colspan="3"><%=userdao.getNick(qboard.getUserID())%></td>
 						</tr>
 						<tr>
-							<td colspan="1">내용</td>
+							<td colspan="1" style="text-align:left">내용</td>
 							<td colspan="3" style="min-height: 400px; text-align:left"><%=qboard.getContent().replaceAll(" ","&nbsp;").replaceAll("<","&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
 							<%
 								String directory =application.getRealPath("/upload/");
@@ -197,7 +197,7 @@
 				<table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
 					<thead>
 						<tr>
-							<th colspan="4" style="background-color: #eeeeee; text-align: center;">답변글</th>
+							<th colspan="5" style="background-color: #eeeeee; text-align: center;">답변글</th>
 						</tr>
 					</thead>
 					<%
@@ -206,15 +206,15 @@
 					
 					<tbody>
 						<tr>
-							<td colspan="1">제목</td>
+							<td colspan="2">제목</td>
 							<td colspan="3"><%=ansboardList.get(i).getTitle().replaceAll(" ","&nbsp;").replaceAll("<","&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
 						</tr>
 						<tr>
-							<td>글작성자</td>
+							<td colspan="2">글작성자</td>
 							<td colspan="3"><%=userdao.getNick(ansboardList.get(i).getUserID())%></td>
 						</tr>
 						<tr>
-							<td colspan="1">내용</td>
+							<td colspan="2">내용</td>
 							<td colspan="3" style="min-height: 400px; text-align:left"><%=ansboardList.get(i).getContent().replaceAll(" ","&nbsp;").replaceAll("<","&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
 						</tr>
 						
@@ -237,10 +237,11 @@
 			<!-- 질문글 여닫기 추가된 부분 22day 03:22-->
 			<button type="button" id="toc-toggle" onclick="openCloseToc()" class="btn btn-primary" style="width: 100px; hieght: 41px; data-toggle="collapse" data-target="#qview">답변글 닫기</button>
 			<%
-				// 관리자(admin) 0 
-				if(userdao.getRole(userid) == 0){
+				// 관리자(admin) 1 
+				
+				if(userdao.getRole(userid) == 1){
 			%>
-				<form action="AsnwerBoard.jsp" style="width: 100px; hieght: 48px;" method="post" accept-charset="UTF-8">
+				<form action="AnswerBoard.jsp" style="width: 100px; hieght: 48px;" method="post" accept-charset="UTF-8">
 					<input type="hidden" name="title" type="text" value="<%=title%>"/>
 					<input type="hidden" name="nick" value="<%=userdao.getNick(qboard.getUserID())%>" type="text"/>
 					<input type="hidden" name="content" value="<%=content%>" type="text"/>

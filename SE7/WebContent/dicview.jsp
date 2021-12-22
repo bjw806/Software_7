@@ -4,7 +4,9 @@
 <%@page import="User.UserDAO"%>
 <%@page import="User.dicboard"%>
 <%@page import="User.User"%>
-
+<%@page import="java.io.File" %>
+<%@page import= "java.util.ArrayList" %>
+<% request.setCharacterEncoding("UTF-8"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -45,6 +47,10 @@
 		UserDAO userdao = new UserDAO();
 		
 		dicboard dicboard = userdao.getDboard(Dnumber);
+		
+		String title = dicboard.getTitle();
+		String content =dicboard.getContent();
+		String nick = userdao.getNick(dicboard.getUserID());
 		
 	%>
  <!-- Header -->
@@ -116,25 +122,45 @@
 				<table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
 					<thead>
 						<tr>
-							<th colspan="3" style="background-color: #eeeeee; text-align: center;">게시글</th>
+							<th colspan="5" style="background-color: #eeeeee; text-align: center;">게시글</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
-							<td style="width: 20%;">제목</td>
-							<td colspan="2"><%=dicboard.getTitle().replaceAll(" ","&nbsp;").replaceAll("<","&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
+							<td colspan="2" style="text-align:left">제목</td>
+							<td colspan="3"><%=dicboard.getTitle().replaceAll(" ","&nbsp;").replaceAll("<","&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
 						</tr>
 						<tr>
-							<td>글작성자</td>
-							<td colspan="2"><%=userdao.getNick(dicboard.getUserID())%></td>
+							<td colspan="2" style="text-align:left">작성자</td>
+							<td colspan="3"><%=userdao.getNick(dicboard.getUserID())%></td>
 						</tr>
 						<tr>
-							<td>내용</td>
-							<td colspan="2" style="min-height: 200px; text-align:left"><%=dicboard.getContent().replaceAll(" ","&nbsp;").replaceAll("<","&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
+							<td colspan="1" style="text-align:left">내용</td>
+							<td colspan="3" style="min-height: 200px; text-align:left"><%=dicboard.getContent().replaceAll(" ","&nbsp;").replaceAll("<","&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
+							<%
+								String directory =application.getRealPath("/upload/");
+								String files[] = new File(directory).list();
+								String filename=userdao.getFileRealNameD(Dnumber);
+								String img_scr ;
+								
+								
+								
+								for(int i = 0 ; i < files.length; i++){
+									filename=userdao.getFileRealNameD(Dnumber);
+									
+									if(files[i].equals(userdao.getFileRealNameQ(Dnumber))){
+										;
+										filename=userdao.getFileRealNameD(Dnumber);
+							%>
+								<td colspan="1" ><img src="<%=request.getContextPath()%>/upload/<%=filename%>" width="400px" height="400px"></td>
+							<%
+									}
+								}
+							%>
 						</tr>
 					</tbody>
 				</table>
-				<a href="index.jsp" class="btn btn-primary">목록</a>
+				<a href="dicboard.jsp" class="btn btn-primary">목록</a>
 		</div>
 	</div>
 	
