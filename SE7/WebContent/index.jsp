@@ -249,7 +249,7 @@
 								
 					
         	%>
-        	<div style="width: 270px; height: 237px " class="col-4 col-md-3 p-4 mt-2">
+        	<div style="width: 270px; height: 237px; " class="col-4 col-md-3 p-4 mr-3 my-5">
                 <a href="dicview.jsp?Dnumber=<%=dBoardList.get(i).getDnumber()%>"><img src="<%=request.getContextPath()%>/upload/<%=filename%>" style="width: 270px; height: 237px" class="rounded-circle img-fluid border"></a>
                 <h5 class="text-center mt-3 mb-3"><%=dBoardList.get(i).getTitle()%></h5>
             </div>
@@ -257,8 +257,8 @@
         				}
         			} if(!bool && !alreadyPrinted.contains(dBoardList.get(i).getDnumber()) && !dBoardList.isEmpty()){
         	%>
-        			<div style="width: 270px; height: 237px " class="col-4 col-md-3 p-4 mt-2">
-               			<a href="dicview.jsp?Dnumber=<%=dBoardList.get(i).getDnumber()%>"><img src="./assets/img/default.jpg" style="width: 270px; height: 237px" class="rounded-circle img-fluid border"></a>
+        			<div style="width: 270px; height: 237px " class="col-4 col-md-3 p-4 mr-3 my-5">
+               			<a href="dicview.jsp?Dnumber=<%=dBoardList.get(i).getDnumber()%>"><img src="./assets/img/default.png" style="width: 270px; height: 237px" class="rounded-circle img-fluid border"></a>
                 		<h5 class="text-center mt-3 mb-3"><%=dBoardList.get(i).getTitle()%></h5>
            			</div>
         	
@@ -271,7 +271,7 @@
         		}
         	}
             %>	
-            <div class="col-4 col-md-3 p-4 mt-2">
+            <div class="col-4 col-md-3 p-4 mr-3 my-5">
                			<a href="#"><img src="./assets/img/waiting.gif"></a>
                 		<h5 class="서비스 준비중"></h5>
            			</div>

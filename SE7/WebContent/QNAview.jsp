@@ -83,7 +83,7 @@
                 <div class="flex-fill">
                     <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="index.jsp">분리수거</a>
+                            <a class="nav-link" href="dicboard.jsp">분리수거</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="scoreboard.jsp">재활용평가</a>
@@ -103,9 +103,7 @@
                             </div>
                         </div>
                     </div>
-                    <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal" data-bs-target="#templatemo_search">
-                        <i class="fa fa-fw fa-search text-dark mr-2"></i>
-                    </a>
+                    
                     <%  
                    		if (userid != null){
 					%>
@@ -151,7 +149,7 @@
 							<td colspan="3"><%=qboard.getTitle().replaceAll(" ","&nbsp;").replaceAll("<","&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
 						</tr>
 						<tr>
-							<td colspan="2" style="text-align:left">글작성자</td>
+							<td colspan="2" style="text-align:left">작성자</td>
 							<td colspan="3"><%=userdao.getNick(qboard.getUserID())%></td>
 						</tr>
 						<tr>

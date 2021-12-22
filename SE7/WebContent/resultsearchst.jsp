@@ -22,6 +22,13 @@
     <!-- Load fonts style after rendering the layout styles -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
     <link rel="stylesheet" href="assets/css/fontawesome.min.css">
+    
+    <style type="text/css">
+    	a, a:hover {
+    		color: #000000;
+    		text-decoration: none;
+    	}
+    </style>
 <!--
     
 TemplateMo 559 Zay Shop
@@ -72,7 +79,7 @@ https://templatemo.com/tm-559-zay-shop
                 <div class="flex-fill">
                     <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="index.jsp">분리수거</a>
+                            <a class="nav-link" href="dicboard.jsp">분리수거</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="scoreboard.jsp">재활용평가</a>
