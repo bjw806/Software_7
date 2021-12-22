@@ -412,7 +412,7 @@ public class UserDAO {
 			try {
 				PreparedStatement ps= conn.prepareStatement(sql);
 				ps.setInt(1, Enumber);
-				ps.setString(2,fileName);
+				ps.setString(2, fileName);
 				ps.setString(3, fileRealName);
 						
 				return ps.executeUpdate();

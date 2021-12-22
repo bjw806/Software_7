@@ -44,7 +44,7 @@
 	String fileName = multipartRequest.getOriginalFileName("file");
 	String fileRealName = multipartRequest.getFilesystemName("file");
 	
-	int Enumber ;
+	int Qnumber ;
 	
 	String Title = multipartRequest.getParameter("Title");
 	String Content = multipartRequest.getParameter("Content");
@@ -62,8 +62,8 @@
 		script.println("</script>");
 	// 글쓰기가 정상적으로 실행되면 알림창을 띄우고 게시판 메인으로 이동한다
 	}else {
-		Enumber = userdao.getEnumber(userid);
-		userdao.uploadQNA(Enumber, fileName, fileRealName);
+		Qnumber = userdao.getQnumber(userid);
+		userdao.uploadQNA(Qnumber, fileName, fileRealName);
 		
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
