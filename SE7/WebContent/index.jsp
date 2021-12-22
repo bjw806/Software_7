@@ -4,6 +4,7 @@
 <%@page import="User.UserDAO"%>
 <%@page import="User.dicboard"%>
 <%@page import="User.User"%>
+<%@page import="java.io.File" %>
 <%@page import="java.util.ArrayList" %>
 <%@page import="java.io.PrintWriter"%>
 <!DOCTYPE html>
@@ -201,9 +202,70 @@
     </div>
     <!-- End Banner Hero -->
 
-    <!-- Start Categories of The Month -->
+    <!-- Start Categories of recycling-info -->
     
-    <!-- End Categories of The Month -->
+    <section class="container py-5">
+        <div class="row text-center pt-3">
+            <div class="col-lg-6 m-auto">
+                <h1 class="h1">분리수거 정보</h1>
+                <p>
+                    	분리수거 내용
+                </p>
+            </div>
+        </div>
+        <div class="row">
+        	<% 
+        		// Total Dicboard Post 갯수만큼 for문을 돌아서 이미지 링크 파일을 생성한다.
+        		for(int i=0; i< userdao.getTotalDicboardList().size() ; i++){
+        			ArrayList<dicboard> dBoardList = userdao.getTotalDicboardList();
+        			if(dBoardList.get(i).getTitle() == null || dBoardList.get(i).getTitle().trim().isEmpty()){
+        				System.out.println("null pointer error : dBoard값 중 타이틀이 'null' 인것이 있습니다");
+        			} else{
+        				
+						String directory =application.getRealPath("/upload/");
+						String files[] = new File(directory).list();
+						String filename;
+						String img_scr ;
+						
+						// dicboard는 이미지파일을 가지고 있는지 에대한 bool
+						boolean bool=false;
+						
+						
+						// i 번째 Dicboard가 가지고 있는 이미지 파일을 검색
+						// 있다면 메인 사진으로 사용한다.
+						// 없다면 default사진 (webproject 경로)으로 대신한다.
+						for(int j = 0 ; j < files.length; j++){
+							filename=userdao.getFileRealNameD(dBoardList.get(i).getDnumber());
+							
+							if(files[j].equals(userdao.getFileRealNameD(dBoardList.get(i).getDnumber()))){
+								
+								filename=userdao.getFileRealNameD(dBoardList.get(i).getDnumber());
+								// if문이 true면 i번째 dicboard 는 j번째 dicpicture에 있는 사진을 소유
+								// bool: false -> ture
+								bool = true;
+					
+        	%>
+        	<div class="col-4 col-md-3 p-4 mt-2">
+                <a href="#"><img src="<%=request.getContextPath()%>/upload/<%=filename%>" class="rounded-circle img-fluid border"></a>
+                <h5 class="text-center mt-3 mb-3"><%=dBoardList.get(i).getTitle()%></h5>
+            </div>
+            <%
+        				}
+        			} if(!bool){
+        	%>
+        			<div class="col-4 col-md-3 p-4 mt-2">
+               			<a href="#"><img src="./assets/img/default.jpg" class="rounded-circle img-fluid border"></a>
+                		<h5 class="text-center mt-3 mb-3"><%=dBoardList.get(i).getTitle()%></h5>
+           			</div>
+        	
+        	<%		
+        			}
+        		}
+        	}
+            %>	
+        </div>
+    </section>
+    <!-- End Categories of recycling-info -->
 
     <!-- Start Script -->
     <script src="assets/js/jquery-1.11.0.min.js"></script>

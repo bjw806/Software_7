@@ -253,8 +253,34 @@ public class UserDAO {
 			}
 			return false;
 		}
+		// #전체 DirectoryBoard #Total dicboard List
+		// 전체 백과사전 DB를 가져오는 함수
+		public ArrayList<dicboard> getTotalDicboardList(){
+			ArrayList<dicboard> dicboardList = new ArrayList<dicboard>();
+			String sql = "SELECT * FROM qboard";
+			
+			try {
+				PreparedStatement ps= conn.prepareStatement(sql);
+				rs = ps.executeQuery();
+				
+				while(rs.next()) {
+					dicboard dicboard = new dicboard();
+					
+					dicboard.setDnumber(rs.getInt(1));
+					dicboard.setTitle(rs.getNString(2));
+					dicboard.setContent(rs.getNString(3));
+					dicboard.setUserID(rs.getNString(4));
+					
+					dicboardList.add(dicboard);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} return dicboardList;
+		}
+		
 		
 		// Q&A게시판 DB정보를 가져오는 함수
+		// post 10개씩 한 page에 속하게 해줌.
 		// return 값으로 고유번호, 제목, 내용, 작성자ID를 가져온다.
 		public ArrayList<qboard> getQboardList(int pageNumber){
 			ArrayList<qboard> qboardList = new ArrayList<qboard>();
@@ -280,6 +306,7 @@ public class UserDAO {
 			} return qboardList;
 		}
 		
+		// 특정 Qboard 가져오는함수
 		public qboard getQboard(int Qnumber) {
 			String sql= "SELECT * FROM qboard WHERE Qnumber = ?";
 			try {
@@ -569,6 +596,7 @@ public class UserDAO {
 					} return dboardList;
 				}
 					
+			// Dnumber로 특정 Dboard 정보를 가져온다.
 				public dicboard getDboard(int Dnumber) {
 					String sql= "SELECT * FROM dicboard WHERE Dnumber = ?";
 					try {

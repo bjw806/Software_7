@@ -130,7 +130,7 @@
 							<%
 								String directory =application.getRealPath("/upload/");
 								String files[] = new File(directory).list();
-								String filename=userdao.getFileRealNameQ(Enumber);
+								String filename=userdao.getFileRealNameE(Enumber);
 								String img_scr ;
 								
 								
@@ -139,7 +139,7 @@
 									filename=userdao.getFileRealNameE(Enumber);
 									
 									if(files[i].equals(userdao.getFileRealNameE(Enumber))){
-										;
+										
 										filename=userdao.getFileRealNameE(Enumber);
 							%>
 								<td colspan="1" ><img src="<%=request.getContextPath()%>/upload/<%=filename%>" width="300px" height="200px"></td>
