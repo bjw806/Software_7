@@ -64,7 +64,7 @@
                 <div class="flex-fill">
                     <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="dicboard.jsp">분리수거</a>
+                            <a class="nav-link" href="dicboard.jsp">백과사전</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="scoreboard.jsp">재활용평가</a>

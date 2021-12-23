@@ -74,7 +74,7 @@
                 <div class="flex-fill">
                     <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="dicboard.jsp">분리수거</a>
+                            <a class="nav-link" href="dicboard.jsp">백과사전</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="scoreboard.jsp">재활용평가</a>
@@ -94,15 +94,24 @@
                             </div>
                         </div>
                     </div>
-                    <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal" data-bs-target="#templatemo_search">
-                        <i class="fa fa-fw fa-search text-dark mr-2"></i>
-                    </a>
+                    <%  
+                   	    if (userid != null){
+					%>
+                    <a class="nav-icon position-relative text-decoration-none" href="option.jsp">
+                    	개인정보
+                        <i class="fa fa-fw fa-user text-dark mr-3"></i></a>
+                    <a class="nav-icon position-relative text-decoration-none" href="act_logout.jsp">
+                    	로그아웃
+                        <i class="fas fa-sign-out-alt text-dark mr-3"></i></a>
+                   <%
+                        } else if (userid == null){
+					%>
                     <a class="nav-icon position-relative text-decoration-none" href="login.jsp">
-                        <i class="fa fa-fw fa-user text-dark mr-3"></i>
-<!--                          <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">+99</span>
--->
-                    </a>
-                </div>
+                    	로그인
+                        <i class="fa fa-fw fa-user text-dark mr-3"></i></a>
+                   <%
+                        }
+                   %>
             </div>
         </div>
     </nav>
@@ -135,7 +144,7 @@
                 <div class="col-md-8">
                     <h1>백과사전 게시판</h1>
                     <p>
-                      	설명 필요없으면 삭제
+
                     </p>
                 </div>
                 <div class="col-md-4">
@@ -162,19 +171,22 @@
             </form>
         </div>
     </div>
-	<form action="searchd.jsp">
-	<div align="right">
-		<select id="searchoption" name="searchoption">
-			<option value="Title">제목에서</option>
-			<option value="UserID">작성자에서</option>
-		</select>
-		<input type="text" id="searchtext" name="searchtext" size=10>
-		<input type="submit" class="btn btn-primary pull-right" value="검색">
-	</div>
-	</form>
+	
     <!-- Start Content -->
     <div class="container py-5">
         <div class="row">
+        <!-- Search -->
+        	<form action="searchd.jsp">
+				<div align="right">
+					<select id="searchoption" name="searchoption">
+						<option value="Title">제목에서</option>
+						<option value="UserID">작성자에서</option>
+					</select>
+				<input type="text" id="searchtext" name="searchtext" size=10>
+				<input type="submit" class="btn btn-primary pull-right" value="검색">
+				</div>
+			</form>
+		<!-- End Search -->
 			<table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
 				<thead>
 					<tr>
@@ -207,27 +219,33 @@
 					
 				</tbody>
 			</table>
-			<!-- 글쓰기, 이전, 다음버튼 생성 -->
+			<!-- 페이지 버튼 생성 -->
+			<div align="left">
 			<% 
 				if(pageNumber != 1){
 			%>
-				<a href="index.jsp?pageNumber=<%=pageNumber - 1 %>" class="btn btn-success btn-arrow-left">이전</a>
+				<a href="dicboard.jsp?pageNumber=<%=pageNumber - 1 %>" class="btn btn-success btn-arrow-left">이전</a>
+			<%
+				}for(int i=0; i <10 ; i++){
+					if(userdao.endDicPage(pageNumber) < userdao.stratPage(pageNumber)+i){
+						break;
+					}
+			%>
+				<a href="dicboard.jsp?pageNumber=<%=userdao.stratPage(pageNumber)+i%>" class="btn btn-outline-dark"><%=userdao.stratPage(pageNumber)+i %></a>
+			
 			<%
 				} if(userdao.nextPage(pageNumber+1)){
 			%>
-				<a href="index.jsp?pageNumber=<%=pageNumber + 1 %>" class="btn btn-success btn-arrow-left">다음</a>
+				<a href="dicoard.jsp?pageNumber=<%=pageNumber + 1 %>" class="btn btn-success btn-arrow-left">다음</a>
 			<%
 				}
 			%>
-			
-			<%
-				if(userid !=null){
+			<%	
+				
+				// 1 관리자
+				if(userdao.getRole(userid) == 1){
 			%>
 			<a href="write_dic.jsp" class="btn btn-primary pull-right">글쓰기</a>
-			<%
-				}else if(userid == null){
-			%>
-			<a href="login.jsp" class="btn btn-primary pull-right" onclick="alert('로그인을 하세요')">글쓰기</a>
 			<%
 				}
 			%>

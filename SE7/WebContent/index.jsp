@@ -69,7 +69,7 @@
                 <div class="flex-fill">
                     <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="dicboard.jsp">분리수거</a>
+                            <a class="nav-link" href="dicboard.jsp">백과사전</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="scoreboard.jsp">재활용평가</a>
@@ -208,10 +208,8 @@
     <section class="container py-5">
         <div class="row text-center pt-3">
             <div class="col-lg-6 m-auto">
-                <h1 class="h1">분리수거 정보</h1>
-                <p>
-                    	분리수거 내용
-                </p>
+                <h1 class="h1">백과사전 정보</h1>
+                
             </div>
         </div>
         <div class="row">
